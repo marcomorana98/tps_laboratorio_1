@@ -81,7 +81,7 @@ int main(void) {
 					printf("Se recibio un aumento de $%.2f a el anterior valor de $%.2f. el costo total pasa a ser $%.2f \n",costoEuropeo,costoCalculoTotal,costoCalculoTotalEuropeo);
 				}
 				else{
-					printf("El costo total ese de $.2%f \n",costoCalculoTotal);
+					printf("El costo total ese de $%.2f \n",costoCalculoTotal);
 				}
 			}
 			else{
