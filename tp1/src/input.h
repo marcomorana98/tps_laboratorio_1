@@ -8,12 +8,7 @@
 #ifndef INPUT_H_
 #define INPUT_H_
 
-int utn_getNumero(int* pResultado,
-char* mensaje,
-char* mensajeError,
-int minimo,
-int maximo,
-int reintentos);
+int utn_getNumero(int* pResultado, char* mensaje, char* mensajeError, int minimo, int maximo, int reintentos);
 
 int utn_getCharArray(char array[][9],char* mensaje,char* mensajeError,int reintentos, int contadorDeArray);
 

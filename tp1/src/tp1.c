@@ -33,16 +33,15 @@ int main(void) {
 		printf("Delanteros --> %d \n", verificarPosicion(4,jugadores));
 		printf("3. Realizar calculos \n");
 		printf("4. Imprimir calculos \n");
-	utn_getNumero(&opcion,"Ingrese opcion del menu \n","Numero no reconocido, ingrese otro \n", 0, 4, 2);
-	switch(opcion){
+		utn_getNumero(&opcion,"Ingrese opcion del menu \n","Numero no reconocido, ingrese otro \n", 0, 4, 2);
+		switch(opcion){
 		case 0:
 			printf("se acabo2");
 		break;
 		case 1:
-			gastosIngresados = montoGastos(gastos);
+			banderaGastos = montoGastos(gastos);
 			if(gastosIngresados == 0){
 				banderaGastos = 0;
-				gastosIngresados =-1;
 			}
 		break;
 		case 2:
@@ -71,22 +70,15 @@ int main(void) {
 			break;
 		case 4:
 			if(banderaCalculos == 0){
-				printf("Porcentaje de AFC: %.2f \n", mercado[0]);
-				printf("Porcentaje de CAF: %.2f \n", mercado[1]);
-				printf("Porcentaje de CONCACAF: %.2f \n", mercado[2]);
-				printf("Porcentaje de CONMEBOL: %.2f \n", mercado[3]);
-				printf("Porcentaje de UEFA: %.2f \n", mercado[4]);
-				printf("Porcentaje de OFC: %.2f \n", mercado[5]);
-				if(banderaAumento == 0){
-					printf("Se recibio un aumento de $%.2f a el anterior valor de $%.2f. el costo total pasa a ser $%.2f \n",costoEuropeo,costoCalculoTotal,costoCalculoTotalEuropeo);
-				}
-				else{
-					printf("El costo total ese de $%.2f \n",costoCalculoTotal);
-				}
+				imprimirResultados(mercado,banderaAumento,costoEuropeo, costoCalculoTotal, costoCalculoTotalEuropeo);
+
 			}
 			else{
 				printf("Se deben realizar los calculos antes de imprimirlos \n");
 			}
+		break;
+		default:
+			printf("La opcion no fue reconocida, por favor ingrese otra opcion \n");
 		break;
 	}
 	}

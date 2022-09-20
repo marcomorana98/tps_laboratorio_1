@@ -6,18 +6,18 @@
 int montoGastos(int gastos[]){
 	int result = -1;
 	int opcion;
-	utn_getNumero(&opcion,"Seleccione uno de los tipos de gastos: Hospedaje(1) - Comida (2) - Transporte (3) \n","error", 1, 3, 2);
+	utn_getNumero(&opcion,"Seleccione uno de los tipos de gastos: Hospedaje(1) - Comida (2) - Transporte (3) \n","El numero no fue reconocido, Ingrese otro \n", 1, 3, 2);
 	switch(opcion){
 	case 1:
-		result = utn_getNumero(&gastos[0],"Ingrese gasto del hospedaje","error", 1, 999999999, 2);
+		result = utn_getNumero(&gastos[0],"Ingrese gasto del hospedaje \n","El numero no fue reconocido, Ingrese otro \n", 1, 99999999, 2);
 		return result;
 		break;
 	case 2:
-		result = utn_getNumero(&gastos[1],"Ingrese gasto de la comida","error", 1, 999999999, 2);
+		result = utn_getNumero(&gastos[1],"Ingrese gasto de la comida \n","El numero no fue reconocido, Ingrese otro \n", 1, 99999999, 2);
 		return result;
 		break;
 	case 3:
-		result = utn_getNumero(&gastos[2],"Ingrese gasto del transporte","error", 1, 999999999, 2);
+		result = utn_getNumero(&gastos[2],"Ingrese gasto del transporte \n","El numero no fue reconocido, Ingrese otro \n", 1, 99999999, 2);
 		return result;
 		break;
 	default:
@@ -38,7 +38,7 @@ int cantidadJugadores(int jugadores[][2], int contadorDeJugadores, char confeder
 	int errorConfed;
 
 
-	utn_getNumero(&opcion,"Ingrese tipo de jugador: Arquero(1) - Defensor(2) - Mediocampista(3) - Delantero(4) \n","Numero no reconocido, ingrese otro", 0, 4, 2);
+	utn_getNumero(&opcion,"Ingrese tipo de jugador: Arquero(1) - Defensor(2) - Mediocampista(3) - Delantero(4) \n","Numero no reconocido, ingrese otro \n", 0, 4, 2);
 	switch(opcion){
 
 	case 1:
@@ -48,7 +48,7 @@ int cantidadJugadores(int jugadores[][2], int contadorDeJugadores, char confeder
 			errorConfed = cargarConfederaciones(confederaciones,contadorDeJugadores);
 		}
 		else{
-			printf("a llegado al limite de arqueros");
+			printf("a llegado al limite de arqueros \n");
 			return -1;
 		}
 		if(error == -1 || errorConfed == -1){
@@ -63,7 +63,7 @@ int cantidadJugadores(int jugadores[][2], int contadorDeJugadores, char confeder
 			errorConfed = cargarConfederaciones(confederaciones,contadorDeJugadores);
 		}
 		else{
-			printf("a llegado al limite de defensores");
+			printf("a llegado al limite de defensores \n");
 			return -1;
 		}
 		if(error == -1 || errorConfed == -1){
@@ -78,7 +78,7 @@ int cantidadJugadores(int jugadores[][2], int contadorDeJugadores, char confeder
 			errorConfed = cargarConfederaciones(confederaciones,contadorDeJugadores);
 		}
 		else{
-			printf("a llegado al limite de mediocampistas");
+			printf("a llegado al limite de mediocampistas \n");
 			return -1;
 		}
 		if(error == -1 || errorConfed == -1){
@@ -93,7 +93,7 @@ int cantidadJugadores(int jugadores[][2], int contadorDeJugadores, char confeder
 			errorConfed = cargarConfederaciones(confederaciones,contadorDeJugadores);
 		}
 		else{
-			printf("a llegado al limite de delanteros");
+			printf("a llegado al limite de delanteros \n");
 			return -1;
 		}
 		if(error == -1 || errorConfed == -1){
@@ -110,7 +110,7 @@ int cantidadJugadores(int jugadores[][2], int contadorDeJugadores, char confeder
 int cargarJugador(int jugadores[][2],int posicion, int contadorDeJugadores){
 	int camiseta;
 	int aux;
-	aux = utn_getNumero(&camiseta,"Ingrese numero de camiseta de 1 a 99 \n","Numero no reconocido, ingrese otro", 1, 99, 2);
+	aux = utn_getNumero(&camiseta,"Ingrese numero de camiseta de 1 a 99 \n","Numero no reconocido, ingrese otro \n", 1, 99, 2);
 	jugadores[contadorDeJugadores][0] = camiseta;
 	jugadores[contadorDeJugadores][1] = posicion;
 	return aux;
@@ -118,7 +118,7 @@ int cargarJugador(int jugadores[][2],int posicion, int contadorDeJugadores){
 
 int cargarConfederaciones(char confederaciones[][9], int contadorDeJugadores){
 	int aux;
-	aux = utn_getCharArray(confederaciones,"INGRESE CONFEDERACION \n","Numero no reconocido, ingrese otro", 2,contadorDeJugadores);
+	aux = utn_getCharArray(confederaciones,"Ingrese Confederacion \n","Confederacion no reconocida, por favor ingrese otra \n", 2,contadorDeJugadores);
 	printf("%s", confederaciones[contadorDeJugadores]);
 	return aux;
 }
@@ -172,4 +172,19 @@ float calcularCosto(int gastos[]){
 		total += gastos[i];
 	}
 	return total;
+}
+
+void imprimirResultados(float mercado[],int banderaAumento,float costoEuropeo,float costoCalculoTotal,float costoCalculoTotalEuropeo){
+	printf("Porcentaje de AFC: %.2f \n", mercado[0]);
+	printf("Porcentaje de CAF: %.2f \n", mercado[1]);
+	printf("Porcentaje de CONCACAF: %.2f \n", mercado[2]);
+	printf("Porcentaje de CONMEBOL: %.2f \n", mercado[3]);
+	printf("Porcentaje de UEFA: %.2f \n", mercado[4]);
+	printf("Porcentaje de OFC: %.2f \n", mercado[5]);
+	if(banderaAumento == 0){
+		printf("Se recibio un aumento de $%.2f a el anterior valor de $%.2f. el costo total pasa a ser $%.2f \n",costoEuropeo,costoCalculoTotal,costoCalculoTotalEuropeo);
+	}
+	else{
+		printf("El costo total ese de $%.2f \n",costoCalculoTotal);
+	}
 }

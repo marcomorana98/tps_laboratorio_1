@@ -8,10 +8,13 @@ int utn_getNumero(int* pResultado,char* mensaje,char* mensajeError,int minimo,in
 	while(reintentos>0){
 		printf(mensaje);
 		scanf("%d",&num);
+		fflush(stdin);
 		if(num<=maximo && num>=minimo)
 			break;
 		reintentos--;
-		printf(mensajeError);}
+		printf(mensajeError);
+
+	}
 	if(reintentos==0){
 		ret=-1;
 		}
@@ -34,11 +37,10 @@ int utn_getCharArray(char array[][9],char* mensaje,char* mensajeError,int reinte
 		reintentos--;
 		printf(mensajeError);}
 	if(reintentos==0){
-		printf("ULTRA ERROR");
+		printf("El valor ingresado no fue reconocido, volviendo al menu... \n");
 		ret=-1;
 		}
 	else{
-		printf("paso bien");
 		ret=0;
 		strcpy(array[contadorDeArray],aux);
 	}
