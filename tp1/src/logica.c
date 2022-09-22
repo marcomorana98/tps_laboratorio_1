@@ -3,25 +3,21 @@
 #include "input.h"
 #include <string.h>
 
-int montoGastos(int gastos[]){
-	int result;
+void montoGastos(int gastos[]){
 	int opcion;
 	utn_getNumero(&opcion,"Seleccione uno de los tipos de gastos: Hospedaje(1) - Comida (2) - Transporte (3) \n","El numero no fue reconocido, Ingrese otro \n", 1, 3, 2);
 	switch(opcion){
 	case 1:
-		result = utn_getNumero(&gastos[0],"Ingrese gasto del hospedaje \n","El numero no fue reconocido, Ingrese otro \n", 1, 99999999, 2);
-		return result;
+		utn_getNumero(&gastos[0],"Ingrese gasto del hospedaje \n","El numero no fue reconocido, Ingrese otro \n", 1, 99999999, 2);
 		break;
 	case 2:
-		result = utn_getNumero(&gastos[1],"Ingrese gasto de la comida \n","El numero no fue reconocido, Ingrese otro \n", 1, 99999999, 2);
-		return result;
+		utn_getNumero(&gastos[1],"Ingrese gasto de la comida \n","El numero no fue reconocido, Ingrese otro \n", 1, 99999999, 2);
 		break;
 	case 3:
-		result = utn_getNumero(&gastos[2],"Ingrese gasto del transporte \n","El numero no fue reconocido, Ingrese otro \n", 1, 99999999, 2);
-		return result;
+		utn_getNumero(&gastos[2],"Ingrese gasto del transporte \n","El numero no fue reconocido, Ingrese otro \n", 1, 99999999, 2);
 		break;
 	default:
-		return result;
+		break;
 	}
 
 }
@@ -74,7 +70,7 @@ int cantidadJugadores(int jugadores[][2], int contadorDeJugadores, char confeder
 	case 3:
 		aux = verificarPosicion(3,jugadores);
 		if(aux < 8){
-			error = cargarJugador(jugadores,1,contadorDeJugadores);
+			error = cargarJugador(jugadores,3,contadorDeJugadores);
 			errorConfed = cargarConfederaciones(confederaciones,contadorDeJugadores);
 		}
 		else{
@@ -119,7 +115,6 @@ int cargarJugador(int jugadores[][2],int posicion, int contadorDeJugadores){
 int cargarConfederaciones(char confederaciones[][9], int contadorDeJugadores){
 	int aux;
 	aux = utn_getCharArray(confederaciones,"Ingrese Confederacion \n","Confederacion no reconocida, por favor ingrese otra \n", 2,contadorDeJugadores);
-	printf("%s", confederaciones[contadorDeJugadores]);
 	return aux;
 }
 
@@ -144,23 +139,22 @@ void arrayCero(int array[][2], int primeraLongitud, int segundaLongitud){
 void calcularPromedios(char confederaciones[][9],float mercado[],int contadorDeJugadores){
 	for(int i=0;i<contadorDeJugadores;i++){
 		if(strcmp(confederaciones[i], "AFC")==0){
-
-			mercado[0]+= 100/contadorDeJugadores;
+			mercado[0]+= 100.00/contadorDeJugadores;
 		}
 		if(strcmp(confederaciones[i], "CAF")==0){
-			mercado[1]+= 100/contadorDeJugadores;
+			mercado[1]+= 100.00/contadorDeJugadores;
 		}
 		if(strcmp(confederaciones[i], "CONCACAF")==0){
-			mercado[2]+= 100/contadorDeJugadores;
+			mercado[2]+= 100.00/contadorDeJugadores;
 		}
 		if(strcmp(confederaciones[i], "CONMEBOL")==0){
-			mercado[3]+= 100/contadorDeJugadores;
+			mercado[3]+= 100.00/contadorDeJugadores;
 		}
 		if(strcmp(confederaciones[i], "UEFA")==0){
-			mercado[4] = 100/contadorDeJugadores;
+			mercado[4] = 100.00/contadorDeJugadores;
 		}
 		if(strcmp(confederaciones[i], "OFC")==0){
-			mercado[5]+= 100/contadorDeJugadores;
+			mercado[5]+= 100.00/contadorDeJugadores;
 		}
 	}
 
@@ -182,9 +176,35 @@ void imprimirResultados(float mercado[],int banderaAumento,float costoEuropeo,fl
 	printf("Porcentaje de UEFA: %.2f \n", mercado[4]);
 	printf("Porcentaje de OFC: %.2f \n", mercado[5]);
 	if(banderaAumento == 0){
-		printf("Se recibio un aumento de $%.2f a el anterior valor de $%.2f. el costo total pasa a ser $%.2f \n",costoEuropeo,costoCalculoTotal,costoCalculoTotalEuropeo);
+		printf("Se recibio un aumento debido a que la mayoria de los jugadores pertenecen a la confederacion UEFA, el aumento es de $%.2f a el anterior valor de $%.2f. el costo total pasa a ser $%.2f \n",costoEuropeo,costoCalculoTotal,costoCalculoTotalEuropeo);
 	}
 	else{
 		printf("El costo total ese de $%.2f \n",costoCalculoTotal);
 	}
+}
+
+int equipoMinimo(int jugadores[][2], int contadorDeJugadores){
+	int arqueros = 0;
+	int defensores = 0;
+	int mediocampistas = 0;
+	int delanteros = 0;
+
+	for(int i = 0; i<contadorDeJugadores;i++){
+		if(jugadores[i][1] == 1){
+			arqueros++;
+		}
+		if(jugadores[i][1] == 2){
+			defensores++;
+		}
+		if(jugadores[i][1] == 3){
+			mediocampistas++;
+		}
+		if(jugadores[i][1] == 4){
+			delanteros++;
+		}
+	}
+	if(arqueros > 0 && defensores > 3 && mediocampistas > 3 && delanteros > 1){
+		return 0;
+	}
+	return -1;
 }

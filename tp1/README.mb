@@ -1,1 +1,18 @@
 README
+
+El programa permite ingresar un equipo de futbol para un mundial e ingresar los gastos de este para luego realizar el calculo de cuanto se gasta en el mantenimiento de este.
+
+
+Las opciones en el menu son:
+
+1. Cargar gastos: 
+	En esta opcion se le pedira al usuario ingresar cual de los 3 tipos de gastos se desea ingresar y luego le pedira el importe
+
+2. Cargar Jugadores:
+	En esta opcion se le pedira al usuario ingresar la posicion del jugador que se desea cargar, luego se verifica que haya espacio en esa posicion todavia en el equipo. Una vez que se verifique que hay espacio en el equipo para esa posicion se le pide al usuario que se ingrese el numero de la camiseta y la confederacion del jugador. Una vez terminado esto se mostrara en el menu principal la cantidad de jugadores por posicion que hay actualmente en el equipo
+	
+3. Realizar calculos:
+	Esta opcion estara disponible unicamente cuando se haya cargado el valor de los 3 gastos y al menos la plantilla minima de posiciones del equipo. Esta opcion hace los calculos del porcentaje de las confederaciones y el calculo de los costos del mantenimiento del equipo. En caso que la mayoria de los jugadores pertenezcan a la UEFA se le hara un aumento del %35 al mantenimiento.
+	
+4. Imprimir calculo:
+	Esta opcion estara disponible unicamente luego de realizar los calculos. Se imprimira en pantalla los calculos realizados en la opcion 3.

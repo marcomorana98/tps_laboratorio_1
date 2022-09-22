@@ -6,8 +6,6 @@
 int main(void) {
 	setbuf(stdout,NULL);
 	int opcion;
-	int gastosIngresados = -1;
-	int banderaGastos = -1;
 	int jugadorEntro = -1;
 	int jugadoresIngresados = -1;
 	int gastos[3] = {0};
@@ -33,27 +31,27 @@ int main(void) {
 		printf("Delanteros --> %d \n", verificarPosicion(4,jugadores));
 		printf("3. Realizar calculos \n");
 		printf("4. Imprimir calculos \n");
+		printf("0. Salir \n");
 		utn_getNumero(&opcion,"Ingrese opcion del menu \n","Numero no reconocido, ingrese otro \n", 0, 4, 2);
 		switch(opcion){
 		case 0:
-			printf("se acabo2");
+			printf("Adios");
 		break;
 		case 1:
-			gastosIngresados = montoGastos(gastos);
-			if(gastosIngresados == 0){
-				banderaGastos = 0;
-			}
+			montoGastos(gastos);
 		break;
 		case 2:
 			jugadorEntro = cantidadJugadores(jugadores,contadorDeJugadores,confederaciones);
 			if(jugadorEntro == 0){
-				jugadoresIngresados = 0;
 				contadorDeJugadores++;
+				if(equipoMinimo(jugadores, contadorDeJugadores) == 0){
+						jugadoresIngresados = 0;
+				}
 				jugadorEntro = -1;
 			}
 		break;
 		case 3:
-			if(jugadoresIngresados == 0 && banderaGastos == 0){
+			if(jugadoresIngresados == 0 && gastos[0] > 0 && gastos[1] > 0 && gastos[2] > 0){
 				calcularPromedios(confederaciones,mercado,contadorDeJugadores);
 				costoCalculoTotal = calcularCosto(gastos);
 				if(mercado[4] > 50){
@@ -65,7 +63,7 @@ int main(void) {
 				banderaCalculos = 0;
 			}
 			else{
-			printf("Debe ingresar datos en las opciones 1 y 2 antes de entrar a la opcion 3 \n");
+			printf("Debe ingresar todos los gastos y al menos la composicion minima para el equipo antes de entrar a la opcion 3 \n");
 			}
 			break;
 		case 4:

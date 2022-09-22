@@ -15,4 +15,5 @@ int verificarPosicion(int posicion,int jugadores[][2]);
 void calcularPromedios(char confederaciones[][9],float mercado[],int contadorDeJugadores);
 float calcularCosto(int gastos[]);
 void imprimirResultados(float mercado[],int banderaAumento,float costoEuropeo,float costoCalculoTotal,float costoCalculoTotalEuropeo);
+int equipoMinimo(int jugadores[][2], int contadorDeJugadores);
 #endif /* LOGICA_H_ */
