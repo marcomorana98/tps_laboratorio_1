@@ -16,3 +16,6 @@ Las opciones en el menu son:
 	
 4. Imprimir calculo:
 	Esta opcion estara disponible unicamente luego de realizar los calculos. Se imprimira en pantalla los calculos realizados en la opcion 3.
+	
+5. Salir:
+	Se termina el proceso.

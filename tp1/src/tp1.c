@@ -34,9 +34,6 @@ int main(void) {
 		printf("0. Salir \n");
 		utn_getNumero(&opcion,"Ingrese opcion del menu \n","Numero no reconocido, ingrese otro \n", 0, 4, 2);
 		switch(opcion){
-		case 0:
-			printf("Adios");
-		break;
 		case 1:
 			montoGastos(gastos);
 		break;
@@ -75,6 +72,9 @@ int main(void) {
 				printf("Se deben realizar los calculos antes de imprimirlos \n");
 			}
 		break;
+		case 5:
+				printf("Adios");
+			break;
 		default:
 			printf("La opcion no fue reconocida, por favor ingrese otra opcion \n");
 		break;
