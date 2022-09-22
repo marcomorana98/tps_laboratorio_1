@@ -4,7 +4,7 @@
 #include <string.h>
 
 int montoGastos(int gastos[]){
-	int result = -1;
+	int result;
 	int opcion;
 	utn_getNumero(&opcion,"Seleccione uno de los tipos de gastos: Hospedaje(1) - Comida (2) - Transporte (3) \n","El numero no fue reconocido, Ingrese otro \n", 1, 3, 2);
 	switch(opcion){

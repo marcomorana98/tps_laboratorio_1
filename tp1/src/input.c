@@ -6,11 +6,12 @@ int utn_getNumero(int* pResultado,char* mensaje,char* mensajeError,int minimo,in
 	int ret;
 	int num;
 	while(reintentos>0){
+		setbuf(stdout, NULL);
 		printf(mensaje);
-		scanf("%d",&num);
 		fflush(stdin);
-		if(num<=maximo && num>=minimo)
-			break;
+		if(scanf("%d",&num)){
+			if(num<=maximo && num>=minimo)
+				break;}
 		reintentos--;
 		printf(mensajeError);
 

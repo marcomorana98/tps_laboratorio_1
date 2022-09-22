@@ -39,7 +39,7 @@ int main(void) {
 			printf("se acabo2");
 		break;
 		case 1:
-			banderaGastos = montoGastos(gastos);
+			gastosIngresados = montoGastos(gastos);
 			if(gastosIngresados == 0){
 				banderaGastos = 0;
 			}
