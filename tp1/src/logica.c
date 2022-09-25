@@ -139,22 +139,22 @@ void arrayCero(int array[][2], int primeraLongitud, int segundaLongitud){
 void calcularPromedios(char confederaciones[][9],float mercado[],int contadorDeJugadores){
 	for(int i=0;i<contadorDeJugadores;i++){
 		if(strcmp(confederaciones[i], "AFC")==0){
-			mercado[0]+= 100.00/contadorDeJugadores;
+			mercado[0]++;
 		}
 		if(strcmp(confederaciones[i], "CAF")==0){
-			mercado[1]+= 100.00/contadorDeJugadores;
+			mercado[1]++;
 		}
 		if(strcmp(confederaciones[i], "CONCACAF")==0){
-			mercado[2]+= 100.00/contadorDeJugadores;
+			mercado[2]++;
 		}
 		if(strcmp(confederaciones[i], "CONMEBOL")==0){
-			mercado[3]+= 100.00/contadorDeJugadores;
+			mercado[3]++;
 		}
 		if(strcmp(confederaciones[i], "UEFA")==0){
-			mercado[4] = 100.00/contadorDeJugadores;
+			mercado[4]++;
 		}
 		if(strcmp(confederaciones[i], "OFC")==0){
-			mercado[5]+= 100.00/contadorDeJugadores;
+			mercado[5]++;
 		}
 	}
 
@@ -169,12 +169,12 @@ float calcularCosto(int gastos[]){
 }
 
 void imprimirResultados(float mercado[],int banderaAumento,float costoEuropeo,float costoCalculoTotal,float costoCalculoTotalEuropeo){
-	printf("Porcentaje de AFC: %.2f \n", mercado[0]);
-	printf("Porcentaje de CAF: %.2f \n", mercado[1]);
-	printf("Porcentaje de CONCACAF: %.2f \n", mercado[2]);
-	printf("Porcentaje de CONMEBOL: %.2f \n", mercado[3]);
-	printf("Porcentaje de UEFA: %.2f \n", mercado[4]);
-	printf("Porcentaje de OFC: %.2f \n", mercado[5]);
+	printf("Promedio de AFC: %.2f \n", mercado[0]);
+	printf("Promedio de CAF: %.2f \n", mercado[1]);
+	printf("Promedio de CONCACAF: %.2f \n", mercado[2]);
+	printf("Promedio de CONMEBOL: %.2f \n", mercado[3]);
+	printf("Promedio de UEFA: %.2f \n", mercado[4]);
+	printf("Promedio de OFC: %.2f \n", mercado[5]);
 	if(banderaAumento == 0){
 		printf("Se recibio un aumento debido a que la mayoria de los jugadores pertenecen a la confederacion UEFA, el aumento es de $%.2f a el anterior valor de $%.2f. el costo total pasa a ser $%.2f \n",costoEuropeo,costoCalculoTotal,costoCalculoTotalEuropeo);
 	}
