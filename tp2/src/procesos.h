@@ -10,5 +10,7 @@
 #include "confederacion.h"
 
 void confederacionPorId(int id, eConfederacion confederaciones[],int cantidadConfederaciones,char confederacion[]);
+float promedioDeSalarios(eJugador jugadores[],int cantidadJugadores);
+
 
 #endif /* PROCESOS_H_ */

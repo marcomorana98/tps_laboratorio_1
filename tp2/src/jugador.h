@@ -25,4 +25,5 @@ int bajaJugador(eJugador jugadores[], int contador);
 int modificarJugador(eJugador jugadores[], int contador, eConfederacion confederaciones[], int cantidadConfederaciones);
 void iniCeroArrayJugadores(eJugador jugadores[]);
 
+
 #endif /* JUGADOR_H_ */

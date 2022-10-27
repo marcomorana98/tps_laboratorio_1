@@ -23,6 +23,7 @@ int altaJugador(eJugador jugadores[], int contador, eConfederacion confederacion
 			for(int i = 0; i<contador;i++){
 				if(jugadores[i].isEmpty == 1){
 					aux.id = jugadores[i-1].id+1;
+					break;
 				}
 			}
 		}
@@ -38,7 +39,6 @@ int altaJugador(eJugador jugadores[], int contador, eConfederacion confederacion
 								error = 1;
 								aux.isEmpty = 0;
 							}
-
 						}
 					}
 				}
@@ -47,6 +47,7 @@ int altaJugador(eJugador jugadores[], int contador, eConfederacion confederacion
 		if(error == 1){
 			contador++;
 			jugadores[aux.id-1]=aux;
+			printf("ENTRO");
 			return 1;
 		}
 		return 0;

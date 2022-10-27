@@ -81,3 +81,8 @@ void listarAlfabeticamente(eJugador jugadores[], int contadorJugadores, eConfede
 	return;
 }
 
+void informePromedio(eJugador jugadores[],int contadorJugadores){
+	printf("El promedio del salario es: %f \n", promedioDeSalarios(jugadores,contadorJugadores));
+	printf("Existen %d jugadores los cuales el salario es mayor al promedio",mayorPromedio( jugadores, contadorJugadores,promedioDeSalarios(jugadores,contadorJugadores)));
+}
+
