@@ -7,6 +7,7 @@
 
 #ifndef JUGADOR_H_
 #define JUGADOR_H_
+#include "confederacion.h"
 
 typedef struct{
 	int id;
@@ -19,5 +20,9 @@ typedef struct{
 	short isEmpty;
 }eJugador;
 
+int altaJugador(eJugador jugadores[], int contador, eConfederacion confederaciones[],int contadorConfedereaciones);
+int bajaJugador(eJugador jugadores[], int contador);
+int modificarJugador(eJugador jugadores[], int contador, eConfederacion confederaciones[], int cantidadConfederaciones);
+void iniCeroArrayJugadores(eJugador jugadores[]);
 
 #endif /* JUGADOR_H_ */

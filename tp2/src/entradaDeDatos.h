@@ -10,6 +10,10 @@
 
 int utn_getNumero(int* pResultado, char* mensaje, char* mensajeError, int minimo, int maximo, int reintentos);
 
+int utn_getShort(short* pResultado,char* mensaje,char* mensajeError,int minimo,int maximo,int reintentos);
+
+int utn_getFloat(float* pResultado,char* mensaje,char* mensajeError,float minimo,float maximo,int reintentos);
+
 int utn_getCharArray(char* pResultado, int maxLen, char* mensaje);
 
 

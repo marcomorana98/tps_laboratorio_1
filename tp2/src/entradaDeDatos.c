@@ -17,14 +17,63 @@ int utn_getNumero(int* pResultado,char* mensaje,char* mensajeError,int minimo,in
 
 	}
 	if(reintentos==0){
-		ret=-1;
+		ret=-0;
 		}
 	else{
-		ret=0;
+		ret=1;
 		*pResultado = num;
 	}
 return ret;
 }
+
+int utn_getShort(short* pResultado,char* mensaje,char* mensajeError,int minimo,int maximo,int reintentos){
+	int ret;
+	short num;
+	while(reintentos>0){
+		setbuf(stdout, NULL);
+		printf(mensaje);
+		fflush(stdin);
+		if(scanf("%hu",&num)){
+			if(num<=maximo && num>=minimo)
+				break;}
+		reintentos--;
+		printf(mensajeError);
+
+	}
+	if(reintentos==0){
+		ret=0;
+		}
+	else{
+		ret=1;
+		*pResultado = num;
+	}
+return ret;
+}
+
+int utn_getFloat(float* pResultado,char* mensaje,char* mensajeError,float minimo,float maximo,int reintentos){
+	int ret;
+	float num;
+	while(reintentos>0){
+		setbuf(stdout, NULL);
+		printf(mensaje);
+		fflush(stdin);
+		if(scanf("%f",&num)){
+			if(num<=maximo && num>=minimo)
+				break;}
+		reintentos--;
+		printf(mensajeError);
+
+	}
+	if(reintentos==0){
+		ret=0;
+		}
+	else{
+		ret=1;
+		*pResultado = num;
+	}
+return ret;
+}
+
 
 int myGets(char* cadena,int largo)
 {
