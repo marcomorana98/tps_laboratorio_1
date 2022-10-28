@@ -6,9 +6,6 @@
 #include "procesos.h"
 
 
-void imprimirConfederacion(eConfederacion confederaciones, int i){
-
-}
 
 void listaConfederacion(eConfederacion confederaciones[], int contadorConfedereaciones){
 
@@ -45,6 +42,7 @@ void listarConfederacionesConJugadores(eJugador jugadores[], int contadorJugador
 				printf("| %-5d| %-30s| %-25s| %-25hu| %-15f| %-20d|\n", jugadores[i].id, jugadores[i].nombre, jugadores[i].posicion, jugadores[i].numeroCamiseta, jugadores[i].salario, jugadores[i].aniosContrato);
 			}
 		}
+		printf("###################################################################################################################### \n");
 	}
 	printf("###################################################################################################################### \n");
 }
@@ -86,3 +84,24 @@ void informePromedio(eJugador jugadores[],int contadorJugadores){
 	printf("Existen %d jugadores los cuales el salario es mayor al promedio",mayorPromedio( jugadores, contadorJugadores,promedioDeSalarios(jugadores,contadorJugadores)));
 }
 
+void informeMayorAnosConfederacion(eJugador jugadores[], int contadorJugadores, eConfederacion confederaciones[], int contadorConfederaciones){
+	char confederacionAux[50];
+	int cantidadAnos = mayorAnosProceso(jugadores,contadorJugadores,confederaciones,contadorConfederaciones,confederacionAux);
+	printf("La confederacion con mayor cantidad de años en contrato es %s con %d años",confederacionAux, cantidadAnos);
+}
+
+void porcentajeJugadoresPorConfederacion(eJugador jugadores[], int contadorJugadores, eConfederacion confederaciones[], int contadorConfederaciones){
+	int suma = 0;
+
+	for(int i = 0; i < contadorConfederaciones; i++){
+		for(int j = 0; j < contadorJugadores; j++){
+			if(confederaciones[i].id == jugadores[j].idConfederacion){
+					suma++;
+			}
+		}
+		printf("############################## \n");
+		printf("%-30s \n", confederaciones[i].nombre);
+		printf("%-30d \n", suma / contadorJugadores);
+		printf("############################## \n");
+	}
+}

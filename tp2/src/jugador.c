@@ -16,13 +16,16 @@ void iniCeroArrayJugadores(eJugador jugadores[]){
 int altaJugador(eJugador jugadores[], int contador, eConfederacion confederaciones[],int contadorConfedereaciones){
 		int error = 0;
 		eJugador aux;
+		int posicion;
 		if(contador == 0){
 			aux.id = 1;
+			posicion = 0;
 		}
 		else{
-			for(int i = 0; i<contador;i++){
+			for(int i = 1; i<=contador;i++){
 				if(jugadores[i].isEmpty == 1){
 					aux.id = jugadores[i-1].id+1;
+					posicion = i;
 					break;
 				}
 			}
@@ -45,9 +48,10 @@ int altaJugador(eJugador jugadores[], int contador, eConfederacion confederacion
 			}
 		}
 		if(error == 1){
-			contador++;
-			jugadores[aux.id-1]=aux;
 			printf("ENTRO");
+			contador++;
+			jugadores[posicion]=aux;
+
 			return 1;
 		}
 		return 0;

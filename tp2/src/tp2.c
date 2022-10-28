@@ -50,8 +50,9 @@ int main(void) {
 				break;
 
 			case 4:
+				opcionInformes = 7;
 				while(opcionInformes != 0){
-					printf("Menu de informes: \n 1.Listado de los jugadores ordenados alfabéticamente por nombre de confederación y nombre de jugador. \n 2.Listado de confederaciones con sus jugadores. \n 3.Total y promedio de todos los salarios y cuántos jugadores cobran más del salario promedio. \n 4.Informar la confederación con mayor cantidad de años de contratos total. \n 5.Informar porcentaje de jugadores por cada confederación. \n 6.Informar cual es la región con más jugadores y el listado de los mismos. \n");
+					printf("Menu de informes: \n 1.Listado de los jugadores ordenados alfabéticamente por nombre de confederación y nombre de jugador. \n 2.Listado de confederaciones con sus jugadores. \n 3.Total y promedio de todos los salarios y cuántos jugadores cobran más del salario promedio. \n 4.Informar la confederación con mayor cantidad de años de contratos total. \n 5.Informar porcentaje de jugadores por cada confederación. \n 6.Informar cual es la región con más jugadores y el listado de los mismos. \n 0.Volver");
 					utn_getNumero(&opcionInformes, "ingrese opcion del menu \n", "no se reconocio la opcion \n", 0, 6, 2);
 					switch(opcionInformes){
 					case 1:
@@ -61,20 +62,27 @@ int main(void) {
 						listarConfederacionesConJugadores(jugadores, contadorJugadores, confederaciones, totalConfederaciones);
 						break;
 					case 3:
+						informePromedio(jugadores,contadorJugadores);
 						break;
 					case 4:
+						informeMayorAnosConfederacion(jugadores, contadorJugadores, confederaciones, totalConfederaciones);
 						break;
 					case 5:
+						porcentajeJugadoresPorConfederacion(jugadores, contadorJugadores, confederaciones, totalConfederaciones);
 						break;
 					case 6:
 						break;
 					case 0:
+						break;
+					default:
+						opcionInformes = 0;
 						break;
 					}
 				}
 				opcionInformes = -1;
 				break;
 			case 0:
+
 				return 0;
 		}
 	}

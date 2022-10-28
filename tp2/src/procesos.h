@@ -11,6 +11,8 @@
 
 void confederacionPorId(int id, eConfederacion confederaciones[],int cantidadConfederaciones,char confederacion[]);
 float promedioDeSalarios(eJugador jugadores[],int cantidadJugadores);
+int mayorAnosProceso(eJugador jugadores[], int contadorJugadores, eConfederacion confederaciones[], int contadorConfederaciones, char confederacionAux[]);
+int mayorPromedio(eJugador jugadores[],int contadorJugadores,float promedio);
 
 
 #endif /* PROCESOS_H_ */
