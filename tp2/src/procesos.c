@@ -40,14 +40,14 @@ int mayorAnosProceso(eJugador jugadores[], int contadorJugadores, eConfederacion
 	int mayor = 0;
 	int aux = 0;
 	for(int i = 0; i < contadorConfederaciones; i++){
-		for(int j = 0; i < contadorJugadores; j++){
+		for(int j = 0; j < contadorJugadores; j++){
 			if(jugadores[j].idConfederacion == confederaciones[i].id){
 				aux = aux + jugadores[j].aniosContrato;
 			}
 		}
 		if(aux > mayor){
 			mayor = aux;
-			confederacionAux = confederaciones[i].nombre;
+			strcpy(confederacionAux, confederaciones[i].nombre);
 		}
 		aux = 0;
 	}

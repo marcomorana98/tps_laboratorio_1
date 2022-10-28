@@ -91,17 +91,19 @@ void informeMayorAnosConfederacion(eJugador jugadores[], int contadorJugadores, 
 }
 
 void porcentajeJugadoresPorConfederacion(eJugador jugadores[], int contadorJugadores, eConfederacion confederaciones[], int contadorConfederaciones){
-	int suma = 0;
+	float suma = 0;
 
 	for(int i = 0; i < contadorConfederaciones; i++){
 		for(int j = 0; j < contadorJugadores; j++){
 			if(confederaciones[i].id == jugadores[j].idConfederacion){
-					suma++;
+					suma = suma + 1 ;
 			}
 		}
 		printf("############################## \n");
-		printf("%-30s \n", confederaciones[i].nombre);
-		printf("%-30d \n", suma / contadorJugadores);
-		printf("############################## \n");
+		printf("Confederacion: %-30s \n", confederaciones[i].nombre);
+		printf("Porcentaje de jugadores: %-30f \n", suma / contadorJugadores * 100);
+
+		suma = 0;
 	}
+	printf("############################## \n");
 }
