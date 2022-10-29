@@ -6,13 +6,14 @@
 
 
 
-void confederacionPorId(int id, eConfederacion confederaciones[],int cantidadConfederaciones,char confederacion[]){
+int confederacionPorId(int id, eConfederacion confederaciones[],int cantidadConfederaciones,char confederacion[]){
 	for(int i=0;i<cantidadConfederaciones;i++){
 		if(id == confederaciones[i].id){
 			strcpy(confederacion,confederaciones[i].nombre);
-			return;
+			return 1;
 		}
 	}
+	return 0;
 }
 
 float promedioDeSalarios(eJugador jugadores[],int cantidadJugadores){
@@ -52,4 +53,24 @@ int mayorAnosProceso(eJugador jugadores[], int contadorJugadores, eConfederacion
 		aux = 0;
 	}
 	return mayor;
+}
+
+int encontrarConfederacionMasGrande(eJugador jugadores[], int contadorJugadores, eConfederacion confederaciones[], int contadorConfederaciones, char regionMasGrande[]){
+	int mayor = 0;
+	int aux = 0;
+	int lugar;
+	for(int i = 0; i < contadorConfederaciones; i++){
+		for(int j = 0; j < contadorJugadores; j++){
+			if(jugadores[j].idConfederacion == confederaciones[i].id){
+				aux++;
+			}
+		}
+		if(aux > mayor){
+			mayor = aux;
+			strcpy(regionMasGrande, confederaciones[i].region);
+			lugar = i;
+		}
+		aux = 0;
+	}
+	return lugar;
 }
