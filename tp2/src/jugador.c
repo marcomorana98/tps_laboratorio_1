@@ -5,7 +5,7 @@
 #include "salidaDeDatos.h"
 #include "procesos.h"
 
-
+//Esta funcion inicializa el array de jugadores con is empty en 1
 void iniCeroArrayJugadores(eJugador jugadores[]){
 	for(int i=0;i<3000;i++){
 		jugadores[i].id = 0;
@@ -13,6 +13,7 @@ void iniCeroArrayJugadores(eJugador jugadores[]){
 	}
 }
 
+//Esta funcion da de alta un jugador
 int altaJugador(eJugador jugadores[], int contador, eConfederacion confederaciones[],int contadorConfedereaciones){
 		int error = 0;
 		eJugador aux;
@@ -47,6 +48,7 @@ int altaJugador(eJugador jugadores[], int contador, eConfederacion confederacion
 		return 0;
 }
 
+//Esta funcion da de baja un jugador
 int bajaJugador(eJugador jugadores[], int contador){
 	int opcion = 0;
 	if(utn_getNumero(&opcion, "ingrese el id del jugador que se desea borrar, ingrese 0 para regresar \n", "no se reconocio el numero \n", 0, 99, 2) == 1){
@@ -69,6 +71,7 @@ int bajaJugador(eJugador jugadores[], int contador){
 	return 0;
 }
 
+//Esta funcion modifica un jugador
 int modificarJugador(eJugador jugadores[], int contador, eConfederacion confederaciones[], int cantidadConfederaciones){
 	int id;
 	int opcion;

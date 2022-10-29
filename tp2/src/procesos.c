@@ -5,7 +5,7 @@
 #include <string.h>
 
 
-
+//Esta funcion encuentra una confederacion por el id y le asigna el valor del nombre a un array
 int confederacionPorId(int id, eConfederacion confederaciones[],int cantidadConfederaciones,char confederacion[]){
 	for(int i=0;i<cantidadConfederaciones;i++){
 		if(id == confederaciones[i].id){
@@ -16,6 +16,7 @@ int confederacionPorId(int id, eConfederacion confederaciones[],int cantidadConf
 	return 0;
 }
 
+//Esta funcion calcula el promedio de los salarios de los jugadores
 float promedioDeSalarios(eJugador jugadores[],int cantidadJugadores){
 	float suma = 0;
 	float total = 0;
@@ -27,6 +28,7 @@ float promedioDeSalarios(eJugador jugadores[],int cantidadJugadores){
 	return total;
 }
 
+//Esta funcion calcula cuantos jugadores superan el promedio del salario
 int mayorPromedio(eJugador jugadores[],int contadorJugadores,float promedio){
 	int total = 0;
 	for(int i=0;i<contadorJugadores;i++){
@@ -37,6 +39,7 @@ int mayorPromedio(eJugador jugadores[],int contadorJugadores,float promedio){
 	return total;
 }
 
+//Esta funcion calcula cual confederacion posee mayor cantidad de años de contrato y lo asigna a un array, tambien devuelve la suma de los años de la confederacion con mas años de contrato
 int mayorAnosProceso(eJugador jugadores[], int contadorJugadores, eConfederacion confederaciones[], int contadorConfederaciones, char confederacionAux[]){
 	int mayor = 0;
 	int aux = 0;
@@ -55,6 +58,8 @@ int mayorAnosProceso(eJugador jugadores[], int contadorJugadores, eConfederacion
 	return mayor;
 }
 
+
+//Esta funcion encuentra la confederacion con mas jugadores y le asigna el valor de la region a un array y devuelve la posicion en el array de la confederacion con mas jugadores
 int encontrarConfederacionMasGrande(eJugador jugadores[], int contadorJugadores, eConfederacion confederaciones[], int contadorConfederaciones, char regionMasGrande[]){
 	int mayor = 0;
 	int aux = 0;

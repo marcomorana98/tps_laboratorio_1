@@ -6,7 +6,7 @@
 #include "procesos.h"
 
 
-
+//Esta funcion lista las confederaciones
 void listaConfederacion(eConfederacion confederaciones[], int contadorConfedereaciones){
 
 	printf("############################################################################################## \n");
@@ -18,6 +18,7 @@ void listaConfederacion(eConfederacion confederaciones[], int contadorConfederea
 	return;
 }
 
+//Esta funcion lista los jugadores
 void listaJugador(eJugador jugadores[],int cantidad, eConfederacion confederaciones[], int cantidadConfederaciones){
 	char confederacionAux[50];
 	printf("###########################################################################################################################################################\n");
@@ -32,6 +33,7 @@ void listaJugador(eJugador jugadores[],int cantidad, eConfederacion confederacio
 	return;
 }
 
+//Esta funcion lista una confederacion con sus respectivos jugadores
 void listarConfederacionConJugadores(eJugador jugadores[], int contadorJugadores, eConfederacion confederacion, int contadorConfederaciones){
 
 	printf("| %-5s| %-30s| %-25s| %-25s | %-15s| %-20s |\n", "ID", "NOMBRE", "POSICION", "N° DE CAMISETA", "SUELDO", "AÑOS DE CONTRATO");
@@ -43,6 +45,7 @@ void listarConfederacionConJugadores(eJugador jugadores[], int contadorJugadores
 }
 
 
+//Esta funcion lista varias confederaciones con sus respectivos jugadores
 void listarConfederacionesConJugadores(eJugador jugadores[], int contadorJugadores, eConfederacion confederaciones[], int contadorConfederaciones){
 	printf("################################################################################################################################### \n");
 	for(int i = 0; i < contadorConfederaciones; i++){
@@ -51,6 +54,7 @@ void listarConfederacionesConJugadores(eJugador jugadores[], int contadorJugador
 	}
 }
 
+//Esta funcion lista los jugadores ordenados alfabeticamente por su confederacion y su region
 void listarAlfabeticamente(eJugador jugadores[], int contadorJugadores, eConfederacion confederaciones[], int contadorConfederaciones){
 	eJugador auxArray[3000];
 	eJugador aux;
@@ -89,17 +93,20 @@ void listarAlfabeticamente(eJugador jugadores[], int contadorJugadores, eConfede
 	return;
 }
 
+//Esta funcion informa el promedio de los sueldos de los jugadores y informa cuantos superan este
 void informePromedio(eJugador jugadores[],int contadorJugadores){
 	printf("El promedio del salario es: %.2f \n", promedioDeSalarios(jugadores,contadorJugadores));
 	printf("Existen %d jugadores los cuales el salario es mayor al promedio \n",mayorPromedio( jugadores, contadorJugadores,promedioDeSalarios(jugadores,contadorJugadores)));
 }
 
+//Esta funcion informa cual es la confederacion con mayor cantidad de años de contrato
 void informeMayorAnosConfederacion(eJugador jugadores[], int contadorJugadores, eConfederacion confederaciones[], int contadorConfederaciones){
 	char confederacionAux[50];
 	int cantidadAnos = mayorAnosProceso(jugadores,contadorJugadores,confederaciones,contadorConfederaciones,confederacionAux);
 	printf("La confederacion con mayor cantidad de años en contrato es %s con %d años \n",confederacionAux, cantidadAnos);
 }
 
+//Esta funcion muestra las confederaciones y el porcentaje de jugadores que poseen sobre el total
 void porcentajeJugadoresPorConfederacion(eJugador jugadores[], int contadorJugadores, eConfederacion confederaciones[], int contadorConfederaciones){
 	float suma = 0;
 
@@ -118,6 +125,7 @@ void porcentajeJugadoresPorConfederacion(eJugador jugadores[], int contadorJugad
 	printf("################################################ \n");
 }
 
+//Esta funcion muestra la region con mas jugadores y lista los mismos
 void informeConfederacionConMasJugadores(eJugador jugadores[], int contadorJugadores, eConfederacion confederaciones[], int contadorConfederaciones){
 	char regionMasGrande[50];
 	int posicionMayorArray;

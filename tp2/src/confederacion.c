@@ -6,6 +6,7 @@
 #include "salidaDeDatos.h"
 #include "procesos.h"
 
+//Esta funcion inicializa el array de confederacion como se pidio en el enunciado
 void llenarArrayConfederacion(eConfederacion array[]){
 	array[0].id = 100;
 	strcpy(array[0].nombre,"CONMEBOL");
@@ -39,6 +40,7 @@ void llenarArrayConfederacion(eConfederacion array[]){
 
 }
 
+//Esta funcion da de alta una confederacion
 int altaConfederacion(eConfederacion confederaciones[],int contadorConfedereaciones){
 		int error = 0;
 		eConfederacion aux;
@@ -65,6 +67,7 @@ int altaConfederacion(eConfederacion confederaciones[],int contadorConfedereacio
 		return 0;
 }
 
+//Esta funcion da de baja una confederacion
 int bajaConfederacion(eConfederacion confederaciones[],int contadorConfedereaciones){
 	int opcion = 0;
 	if(utn_getNumero(&opcion, "ingrese el id de la confederacion que se desea borrar, ingrese 0 para regresar \n", "no se reconocio el numero \n", 0, 99, 2) == 1){
@@ -83,6 +86,7 @@ int bajaConfederacion(eConfederacion confederaciones[],int contadorConfedereacio
 	return 0;
 }
 
+//Esta funcion modifcia una confederacion
 int modificarConfederacion(eConfederacion confederaciones[], int cantidadConfederaciones){
 	int id;
 	int opcion = 8;
