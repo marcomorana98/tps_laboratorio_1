@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Jugador.h"
-
+#include "Seleccion.h"
 
 Seleccion* selec_new();
 
