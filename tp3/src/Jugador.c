@@ -10,37 +10,37 @@ int jug_setId(Jugador* this,int id){
 }
 
 int jug_getId(Jugador* this,int* id){
-	id = this->id;
+	*id = this->id;
 	return 1;
 }
 
 int jug_setNombreCompleto(Jugador* this,char* nombreCompleto){
-	this->nombreCompleto = nombreCompleto;
+	strcpy(this->nombreCompleto,nombreCompleto);
 	return 1;
 }
 
-int jug_getNombreCompleto(Jugador* this,char* nombreCompleto){
-	nombreCompleto = this->nombreCompleto;
+int jug_getNombreCompleto(Jugador* this,char** nombreCompleto){
+	*nombreCompleto = this->nombreCompleto;
 	return 1;
 }
 
 int jug_setPosicion(Jugador* this,char* posicion){
-	this->posicion = posicion;
+	strcpy(this->posicion,posicion);
 	return 1;
 }
 
-int jug_getPosicion(Jugador* this,char* posicion){
-	posicion = this->posicion;
+int jug_getPosicion(Jugador* this,char** posicion){
+	*posicion = this->posicion;
 	return 1;
 }
 
 int jug_setNacionalidad(Jugador* this,char* nacionalidad){
-	this->nacionalidad = nacionalidad;
+	strcpy(this->nacionalidad,nacionalidad);
 	return 1;
 }
 
-int jug_getNacionalidad(Jugador* this,char* nacionalidad){
-	nacionalidad = this->nacionalidad;
+int jug_getNacionalidad(Jugador* this,char** nacionalidad){
+	*nacionalidad = this->nacionalidad;
 	return 1;
 }
 
@@ -50,7 +50,7 @@ int jug_setEdad(Jugador* this,int edad){
 }
 
 int jug_getEdad(Jugador* this,int* edad){
-	edad = this->edad;
+	*edad = this->edad;
 	return 1;
 }
 
@@ -60,16 +60,16 @@ int jug_setIdSeleccion(Jugador* this,int idSeleccion){
 }
 
 int jug_getSIdSeleccion(Jugador* this,int* idSeleccion){
-	idSeleccion = this->idSeleccion;
+	*idSeleccion = this->idSeleccion;
 	return 1;
 }
 
 Jugador* jug_newParametros(char* idStr,char* nombreCompletoStr,char* edadStr, char* posicionStr, char* nacionalidadStr, char* idSelccionStr){
-	Jugador* pjugador;
+	Jugador* pjugador = (Jugador*)malloc(sizeof(Jugador));
 	jug_setId(pjugador,atoi(idStr));
 	jug_setNombreCompleto(pjugador,nombreCompletoStr);
 	jug_setPosicion(pjugador,posicionStr);
-	jug_setedadStr(pjugador,atoi(edadStr));
+	jug_setEdad(pjugador,atoi(edadStr));
 	jug_setNacionalidad(pjugador,nacionalidadStr);
 	jug_setIdSeleccion(pjugador,atoi(idSelccionStr));
 	return pjugador;
