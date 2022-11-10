@@ -7,16 +7,16 @@ Seleccion* selec_new();
 
 
 int selec_getId(Seleccion* this,int* id){
-	id = this->id;
+	*id = this->id;
 	return 1;
 }
 int selec_getPais(Seleccion* this,char* pais){
-	pais = this->pais;
+	strcpy(pais, this->pais);
 	return 1;
 }
 
 int selec_getConfederacion(Seleccion* this,char* confederacion){
-	confederacion = this->confederacion;
+	strcpy(confederacion, this->confederacion);
 	return 1;
 }
 
@@ -25,7 +25,7 @@ int selec_setConvocados(Seleccion* this,int convocados){
 	return 1;
 }
 int selec_getConvocados(Seleccion* this,int* convocados){
-	strcpy(this->convocados,convocados);
+	*convocados = this->convocados;
 	return 1;
 }
 

@@ -3,6 +3,7 @@
 #include "LinkedList.h"
 #include "Controller.h"
 #include "Jugador.h"
+#include "entradaDeDatos.h"
 
 int main()
 {
@@ -15,7 +16,7 @@ int main()
     puts("funciona ok");
 
     do{
-    	utn_getNumero(&option,"Ingrese opcion","Incorrecto el ingreso de datos",0,5,2);
+    	utn_getNumero(&option,"Ingrese opcion","Incorrecto el ingreso de datos",0,6,2);
         switch(option)
         {
 
@@ -49,15 +50,18 @@ int main()
                     	controller_listarJugadores(listaJugadores);
                     break;
                     case 2:
-                    	controller_listarSelecciones(listaJugadores);
+                    	controller_listarSelecciones(listaSelecciones);
                     break;
                     case 3:
                     	controller_listarJugadoresConvocados(listaJugadores);
                     break;
                     default:
-                    	printf("adios");
-                    	return 0;
+                    	break;
                     }}while(optionListados != 0);
+                break;
+            case 6:
+            	controller_convocar(listaJugadores, listaSelecciones);
+            	break;
         }
 
     }while(option != 0);

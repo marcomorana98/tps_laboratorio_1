@@ -22,10 +22,8 @@ int parser_JugadorFromText(FILE* pFile , LinkedList* pArrayListJugador)
 	Jugador* pAux = NULL;
 
 	fscanf(pFile,"%[^,],%[^,],%[^,],%[^,],%[^,],%s",idStr,nombreCompletoStr,edadStr,posicionStr,nacionalidadStr,idSeleccionStr);
-	printf("%s %s %s %s %s %s \n",idStr,nombreCompletoStr,edadStr,posicionStr,nacionalidadStr,idSeleccionStr);
 	while(!feof(pFile)){
 		fscanf(pFile,"%[^,],%[^,],%[^,],%[^,],%[^,],%s",idStr,nombreCompletoStr,edadStr,posicionStr,nacionalidadStr,idSeleccionStr);
-		printf("%s %s %s %s %s %s \n",idStr,nombreCompletoStr,edadStr,posicionStr,nacionalidadStr,idSeleccionStr);
 		pAux = jug_newParametros(idStr, nombreCompletoStr, edadStr, posicionStr, nacionalidadStr, idSeleccionStr);
 		ll_add(pArrayListJugador, pAux);
 		pAux = NULL;

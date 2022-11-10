@@ -278,12 +278,15 @@ int controller_cargarSeleccionesDesdeTexto(char* path , LinkedList* pArrayListSe
 {
 	FILE* f = NULL;
 	    f = fopen(path, "r");
-	    if(f == NULL){
-	        return 0;
+	    if(f != NULL){
+		    printf("Lee el archivo correctamente seleccion.");
+		    parser_SeleccionFromText(f, pArrayListSeleccion);
+		    return 1;
 	    }
-	    printf("Lee el archivo correctamente.");
-	    parser_SeleccionFromText(f, pArrayListSeleccion);
-	    return 1;
+	    else{
+	    	printf("SALIO MAL.");
+	    }
+
     return 1;
 }
 
@@ -309,7 +312,23 @@ int controller_editarSeleccion(LinkedList* pArrayListSeleccion)
  */
 int controller_listarSelecciones(LinkedList* pArrayListSeleccion)
 {
-    return 1;
+	int length = ll_len(pArrayListSeleccion);
+	int id;
+	char* pais = (char*)malloc(sizeof(char)*30);
+	char* Confederacion = (char*)malloc(sizeof(char)*30);
+	int Convocados;
+	Seleccion* seleccion;
+	printf("| %-10s| %-5s| %-30s| %-25s| %-10s|\n","NUMERO", "ID", "PAIS", "CONFEDERACION", "CONVOCADOS");
+	for(int i=0;i<length-1;i++){
+		seleccion = ll_get(pArrayListSeleccion, i);
+		selec_getId(seleccion, &id);
+		selec_getPais(seleccion, pais);
+		selec_getConfederacion(seleccion, Confederacion);
+		selec_getConvocados(seleccion, &Convocados);
+
+		printf("| %-10d| %-5d| %-30s| %-25s| %-10d|\n",i+1, id, pais, Confederacion, Convocados);
+	}
+	return 1;
 }
 
 /** \brief Ordenar selecciones
@@ -363,3 +382,48 @@ int controller_listarJugadoresConvocados(LinkedList* pArrayListJugador){
     return 1;
 }
 
+int controller_convocar(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion){
+	int posicion = -1;
+	int idSeleccionAux;
+	int convocadosAux;
+	int opcionSeleccion = -1;
+	int idAux;
+	Jugador* aux;
+	Seleccion* auxSeleccion = NULL;
+	controller_listarJugadores(pArrayListJugador);
+	while(posicion!=0){
+		utn_getNumero(&posicion,"Ingrese la posicion del jugador que desea convocar o 0 para retornar \n","no se reconocio la posicion \n",0,ll_len(pArrayListJugador)+1,2);
+		if(posicion == 0){
+			return 0;
+		}
+		aux = ll_get(pArrayListJugador, posicion-1);
+		jug_getSIdSeleccion(aux,&idSeleccionAux);
+		if(idSeleccionAux!=0){
+			printf("El jugador ya esta convocado, debe seleccionar uno que no este convocado \n");
+			posicion = -1;
+		}
+		else{
+			controller_listarSelecciones(pArrayListSeleccion);
+			while(opcionSeleccion != 0){
+				utn_getNumero(&opcionSeleccion,"Ingrese la seleccion que le desea asignar al jugador o 0 para retornar \n","no se reconocio la posicion \n",0,ll_len(pArrayListSeleccion)+1,2);
+				if(opcionSeleccion == 0){
+					return 0;
+				}
+				auxSeleccion = ll_get(pArrayListSeleccion, opcionSeleccion-1);
+				selec_getConvocados(auxSeleccion,&convocadosAux);
+				if(convocadosAux > 21){
+					printf("esta seleccion ya a llegado a su limite, por favor eliga otra \n");
+				}
+				else{
+					selec_getId(auxSeleccion,&idAux);
+					selec_setConvocados(auxSeleccion,convocadosAux+1);
+					jug_setIdSeleccion(aux,idAux);
+					return 1;
+				}
+			}
+		}
+	}
+	return 1;
+
+
+}

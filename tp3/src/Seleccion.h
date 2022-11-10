@@ -18,7 +18,6 @@ void selec_delete();
 int selec_getId(Seleccion* this,int* id);
 int selec_getPais(Seleccion* this,char* pais);
 int selec_getConfederacion(Seleccion* this,char* confederacion);
-int selec_getIsEmpty(Seleccion* this,int* isEmpty);
 
 int selec_setConvocados(Seleccion* this,int convocados);
 int selec_getConvocados(Seleccion* this,int* convocados);
