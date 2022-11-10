@@ -61,22 +61,23 @@ int controller_agregarJugador(LinkedList* pArrayListJugador)
 	FILE* f = NULL;
 	FILE* w = NULL;
 	f = fopen("contador.txt","r");
-	w = fopen("contador.txt","w");
 	int id;
 	char nombreCompleto[100];
 	int edad;
 	char posicion[30];
 	char nacionalidad[30];
-	int idSeleccion;
-	char* bufferId;
-	char* bufferEdad;
+	char idSeleccionString[10] = "0";
+	char edadString[10];
+	char idString[10];
 	Jugador* newJugador;
-	fscanf(f, "%d", id);
+	fscanf(f, "%d", &id);
 	int error = 0;
 	fclose(f);
+	sprintf(idString,"%d",id);
 
 	if(utn_getCharArray(nombreCompleto, 100, "Ingrese el nombre completo del jugador") == 1){
 		if(utn_getNumero(&edad,"Ingrese la edad del jugador","Incorrecto el ingreso de datos",18,55,2) == 1){
+			sprintf(edadString,"%d",edad);
 			if(utn_getCharArray(posicion, 30, "Ingrese la posicion del jugador") == 1){
 				if(utn_getCharArray(nacionalidad, 30, "Ingrese la nacionalidad del jugador") == 1){
 					error = 1;
@@ -86,8 +87,9 @@ int controller_agregarJugador(LinkedList* pArrayListJugador)
 	}
 
 	if(error == 1){
-		newJugador = jug_newParametros(itoa(id,bufferId,10),nombreCompleto,itoa(edad,bufferEdad,10),posicion ,nacionalidad , "0");
+		newJugador = jug_newParametros(idString,nombreCompleto,edadString,posicion ,nacionalidad , idSeleccionString);
 		ll_add(pArrayListJugador, newJugador);
+		w = fopen("contador.txt","w");
 		fprintf(w,"%d",id+1);
 		fclose(w);
 	    return 1;
@@ -153,6 +155,7 @@ int controller_editarJugador(LinkedList* pArrayListJugador)
 					}
 					break;
 				case 0:
+					ll_set(pArrayListJugador, posicion-1,aux);
 					printf("Volviendo al menu principal... \n");
 					return 1;
 			}
@@ -175,19 +178,17 @@ int controller_removerJugador(LinkedList* pArrayListJugador)
 	FILE* f = NULL;
 	FILE* w = NULL;
 	int posicion = 0;
-	int seleccionJugador;
 	int contador;
 
-	utn_getNumero(posicion,"Ingrese la posicion del jugador que desea borrar o ingrese 0 para volver para atras \n","no se reconocio la posicion \n",0,ll_len(pArrayListJugador)+1,2);
+	utn_getNumero(&posicion,"Ingrese la posicion del jugador que desea borrar o ingrese 0 para volver para atras \n","no se reconocio la posicion \n",0,ll_len(pArrayListJugador)+1,2);
 	if(posicion == 0){
 		return 0;
 	}
 	f = fopen("contador.txt","r");
-	fscanf(f, "%d", contador);
+	fscanf(f, "%d", &contador);
 	fclose(f);
 
-	Jugador* jugadorARemover = ll_get(pArrayListJugador, posicion-1);
-	ll_remove(pArrayListJugador,jugadorARemover);
+	ll_remove(pArrayListJugador,posicion-1);
 
 
 	w = fopen("contador.txt","f");
@@ -338,24 +339,24 @@ int controller_guardarSeleccionesModoTexto(char* path , LinkedList* pArrayListSe
 int controller_listarJugadoresConvocados(LinkedList* pArrayListJugador){
 	int length = ll_len(pArrayListJugador);
 	int id;
-	char nombreCompleto[100];
+	char* nombreCompleto[100];
 	int edad;
-	char posicion[30];
-	char nacionalidad[30];
+	char* posicion[30];
+	char* nacionalidad[30];
 	int idSeleccion;
 	Jugador* jugador;
 	printf("| %-10s| %-5s| %-100s| %-10s| %-30s | %-30s| %-10s|\n","NUMERO", "ID", "NOMBRE COMPLETO", "EDAD", "POSICION", "NACIONALIDAD", "ID DE SELECCION");
 	for(int i=0;i<length;i++){
 		jugador = ll_get(pArrayListJugador, i);
-		jug_getSIdSeleccion(pArrayListJugador,idSeleccion);
+		jug_getSIdSeleccion(pArrayListJugador,&idSeleccion);
 		if(idSeleccion>0){
-			jug_getId(jugador, id);
+			jug_getId(jugador, &id);
 			jug_getNombreCompleto(jugador, nombreCompleto);
-			jug_getPosicion(jugador,posicion);
-			jug_getNacionalidad(jugador,nacionalidad);
-			jug_getEdad(jugador,edad);
-			jug_getSIdSeleccion(jugador,idSeleccion);
-			printf("| %-10d| %-5d| %-100s| %-10d| %-30s | %-30s| %-10d|\n",i+1, id, nombreCompleto, edad, posicion, nacionalidad, idSeleccion);
+			jug_getPosicion(jugador, posicion);
+			jug_getNacionalidad(jugador, nacionalidad);
+			jug_getEdad(jugador, &edad);
+			jug_getSIdSeleccion(jugador, &idSeleccion);
+			printf("| %-5d| %-100s| %-10d| %-30s | %-30s| %-10d|\n",id, nombreCompleto, edad, posicion, nacionalidad, idSeleccion);
 		}
 	}
 

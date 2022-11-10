@@ -14,7 +14,7 @@ int jug_getId(Jugador* this,int* id){
 	return 1;
 }
 
-int jug_setNombreCompleto(Jugador* this,char* nombreCompleto){
+int jug_setNombreCompleto(Jugador* this,char nombreCompleto[]){
 	strcpy(this->nombreCompleto,nombreCompleto);
 	return 1;
 }
@@ -24,7 +24,7 @@ int jug_getNombreCompleto(Jugador* this,char** nombreCompleto){
 	return 1;
 }
 
-int jug_setPosicion(Jugador* this,char* posicion){
+int jug_setPosicion(Jugador* this,char posicion[]){
 	strcpy(this->posicion,posicion);
 	return 1;
 }
@@ -34,7 +34,7 @@ int jug_getPosicion(Jugador* this,char** posicion){
 	return 1;
 }
 
-int jug_setNacionalidad(Jugador* this,char* nacionalidad){
+int jug_setNacionalidad(Jugador* this,char nacionalidad[]){
 	strcpy(this->nacionalidad,nacionalidad);
 	return 1;
 }

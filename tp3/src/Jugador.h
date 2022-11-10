@@ -14,7 +14,7 @@ typedef struct
 }Jugador;
 
 Jugador* jug_new();
-Jugador* jug_newParametros(char* idStr,char* nombreCompletoStr,char* edadStr, char* posicionStr, char* nacionalidadStr, char* idSelccionStr);
+Jugador* jug_newParametros(char idStr[],char nombreCompletoStr[],char edadStr[], char posicionStr[], char nacionalidadStr[], char idSelccionStr[]);
 
 void jug_delete(Jugador* this);
 
