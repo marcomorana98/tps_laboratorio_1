@@ -43,8 +43,12 @@ Seleccion* selec_newParametros(char* idStr,char* paisStr,char* confederacionStr,
 int selec_buscarIdConfederacion(LinkedList* pArrayListSeleccion,int id){
 	Seleccion* seleccionAux;
 	int idAux;
+	if(id == 0){
+		return -1;
+	}
 	for(int i = 0; i < ll_len(pArrayListSeleccion);i++){
-		seleccionAux = selec_getId(pArrayListSeleccion,id);
+		seleccionAux = ll_get(pArrayListSeleccion,i);
+		selec_getId(seleccionAux,&idAux);
 		if(id == idAux){
 			return i;
 		}

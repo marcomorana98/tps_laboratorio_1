@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "Jugador.h"
 #include "Seleccion.h"
@@ -171,7 +172,22 @@ int controller_editarJugador(LinkedList* pArrayListJugador)
  * \return int
  *
  */
-int controller_removerJugador(LinkedList* pArrayListJugador)
+int selec_buscarPorID(LinkedList* pArrayListSeleccion, int id){
+    int len = ll_len(pArrayListSeleccion);
+    Seleccion* seleccionAux;
+    int idEvaluada = 0;
+    for(int i = 0; i < len; i++){
+        seleccionAux = ll_get(pArrayListSeleccion, i);
+        selec_getId(seleccionAux, &idEvaluada);
+        if(idEvaluada == id){
+            return i;
+        }
+    }
+    return -1;
+}
+
+
+int controller_removerJugador(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion)
 {
 	controller_listarJugadores(pArrayListJugador);
 
@@ -179,6 +195,10 @@ int controller_removerJugador(LinkedList* pArrayListJugador)
 	FILE* w = NULL;
 	int posicion = 0;
 	int contador;
+	Jugador* aux;
+	int auxId;
+	int auxConvocados;
+	int auxIdSeleccion;
 
 	utn_getNumero(&posicion,"Ingrese la posicion del jugador que desea borrar o ingrese 0 para volver para atras \n","no se reconocio la posicion \n",0,ll_len(pArrayListJugador)+1,2);
 	if(posicion == 0){
@@ -187,6 +207,16 @@ int controller_removerJugador(LinkedList* pArrayListJugador)
 	f = fopen("contador.txt","r");
 	fscanf(f, "%d", &contador);
 	fclose(f);
+
+	aux = ll_get(pArrayListJugador,posicion);
+
+	jug_getSIdSeleccion(aux, &auxId);
+	if(auxId != 0){
+		auxIdSeleccion = selec_buscarPorID(pArrayListSeleccion, auxId);
+		pArrayListSeleccion = ll_get(pArrayListSeleccion, auxIdSeleccion);
+		selec_getConvocados(pArrayListSeleccion,&auxConvocados);
+		selec_setConvocados(pArrayListSeleccion,auxConvocados-1);
+	}
 
 	ll_remove(pArrayListJugador,posicion-1);
 
@@ -236,8 +266,42 @@ int controller_listarJugadores(LinkedList* pArrayListJugador)
  * \return int
  *
  */
-int controller_ordenarJugadores(LinkedList* pArrayListJugador)
+
+
+int ordenarJugadoresPorNacionalidad(void* pAux1, void* pAux2){
+	return strcmp(((Jugador*)pAux1) -> nacionalidad, ((Jugador*)pAux2) -> nacionalidad);
+}
+
+int ordenarJugadoresPorEdad(void* pAux1, void* pAux2){
+	 if(((Jugador*)pAux1) -> edad > ((Jugador*)pAux2) -> edad){
+		 return 1;
+	}
+	 else{
+		 return 0;
+	 }
+}
+
+int ordenarJugadoresPorNombre(void* pAux1, void* pAux2){
+	return strcmp(((Jugador*)pAux1) -> nombreCompleto, ((Jugador*)pAux2) -> nombreCompleto);
+}
+
+int controller_ordenarJugadores(LinkedList* pArrayListJugador, int opcion)
 {
+
+		switch(opcion){
+		case 1:
+			ll_sort(pArrayListJugador, ordenarJugadoresPorNacionalidad,1);
+			break;
+		case 2:
+			ll_sort(pArrayListJugador, ordenarJugadoresPorEdad,1);
+			break;
+		case 3:
+			ll_sort(pArrayListJugador, ordenarJugadoresPorNombre,1);
+			break;
+		case 0:
+			return 0;
+			break;
+	}
     return 1;
 }
 
@@ -262,6 +326,15 @@ int controller_guardarJugadoresModoTexto(char* path , LinkedList* pArrayListJuga
  */
 int controller_guardarJugadoresModoBinario(char* path , LinkedList* pArrayListJugador)
 {
+	FILE* f = NULL;
+	Jugador* aux;
+	f = fopen(path, "wb");
+	for(int i=0; i < ll_len(pArrayListJugador); i++){
+		aux = ll_get(pArrayListJugador,i);
+		fwrite(aux,sizeof(Jugador),1,f);
+	}
+	fclose(f);
+
     return 1;
 }
 
@@ -338,8 +411,16 @@ int controller_listarSelecciones(LinkedList* pArrayListSeleccion)
  * \return int
  *
  */
+int ordenarSeleccionesPorConfederacion(void* pAux1, void* pAux2){
+	return strcmp(((Seleccion*)pAux1) -> confederacion, ((Seleccion*)pAux2) -> confederacion);
+}
+
+
 int controller_ordenarSelecciones(LinkedList* pArrayListSeleccion)
 {
+
+	ll_sort(pArrayListSeleccion, ordenarSeleccionesPorConfederacion,1);
+
     return 1;
 }
 
@@ -424,6 +505,64 @@ int controller_convocar(LinkedList* pArrayListJugador, LinkedList* pArrayListSel
 		}
 	}
 	return 1;
+}
 
 
+int controller_quita_seleccion(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion){
+	int posicion = -1;
+	controller_listarJugadoresConvocados(pArrayListJugador);
+	int idSeleccionAux;
+	int convocadosAux;
+	int opcionSeleccion = -1;
+	int idAux;
+	Jugador* aux;
+	Seleccion* auxSeleccion = NULL;
+
+	while(posicion!=0){
+		utn_getNumero(&posicion,"Ingrese la posicion del jugador que desea convocar o 0 para retornar \n","no se reconocio la posicion \n",0,ll_len(pArrayListJugador)+1,2);
+		if(posicion == 0){
+			return 0;
+		}
+		aux = ll_get(pArrayListJugador, posicion-1);
+		jug_getSIdSeleccion(aux,&idSeleccionAux);
+		if(idSeleccionAux == 0){
+			printf("jugador no esta en seleccion por favor elija otro");
+		}
+		auxSeleccion = ll_get(pArrayListSeleccion, opcionSeleccion-1);
+		selec_getConvocados(auxSeleccion,&convocadosAux);
+		selec_setConvocados(auxSeleccion,convocadosAux-1);
+		jug_setIdSeleccion(aux,0);
+		return 1;
+		}
+	}
+
+int controller_convocadosDeSeleccion(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion, LinkedList* pArrayListConvocados){
+	char* confederacion = (char*)malloc(sizeof(char)*30);
+	Jugador* auxPunteroJugador = (Jugador*)malloc(sizeof(Jugador));
+	Seleccion* auxSeleccion = (Seleccion*)malloc(sizeof(Seleccion));
+	int auxIdSeleccion;
+	char* auxConfederacion = (char*)malloc(sizeof(char)*30);
+	int posicionSeleccion;
+	utn_getCharArray(confederacion, 30, "Ingrese nombre de la confederacion en mayusculas");
+	for(int i  = 0; i < ll_len(pArrayListJugador); i++){
+
+		auxPunteroJugador = ll_get(pArrayListJugador,i);
+
+		jug_getSIdSeleccion(auxPunteroJugador, &auxIdSeleccion);
+
+		posicionSeleccion = selec_buscarIdConfederacion(pArrayListSeleccion,auxIdSeleccion);
+		if(posicionSeleccion != -1){
+
+
+			auxSeleccion = ll_get(pArrayListSeleccion, posicionSeleccion);
+
+			selec_getConfederacion(auxSeleccion,auxConfederacion);
+
+			if(strcmp(auxConfederacion,confederacion) == 0){
+				//printf("%s",auxPunteroJugador->nombreCompleto);
+				ll_add(pArrayListConvocados, auxPunteroJugador);
+			}
+		}
+	}
+	return 1;
 }

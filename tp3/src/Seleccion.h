@@ -21,6 +21,7 @@ int selec_getConfederacion(Seleccion* this,char* confederacion);
 
 int selec_setConvocados(Seleccion* this,int convocados);
 int selec_getConvocados(Seleccion* this,int* convocados);
+int selec_buscarIdConfederacion(LinkedList* pArrayListSeleccion,int id);
 
 int selec_descontarJugadorPorId(LinkedList* pArrayListSeleccion,int id);
 
