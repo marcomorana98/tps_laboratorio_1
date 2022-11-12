@@ -14,17 +14,19 @@ int main()
     int optionOrden = -1;
     LinkedList* listaJugadores = ll_newLinkedList();
     LinkedList* listaSelecciones = ll_newLinkedList();
+	LinkedList* listaConvocados = ll_newLinkedList();
+
 
     puts("funciona ok");
 
     do{
-    	utn_getNumero(&option,"Ingrese opcion","Incorrecto el ingreso de datos",0,8,2);
+    	utn_getNumero(&option,"Ingrese opcion","Incorrecto el ingreso de datos",1,11,2);
         switch(option)
         {
 
             case 1:
-            	controller_cargarJugadoresDesdeTexto("./jugadores.csv",listaJugadores);
-            	controller_cargarSeleccionesDesdeTexto("./selecciones.csv",listaSelecciones);
+            	controller_cargarJugadoresDesdeTexto("jugadores.csv",listaJugadores);
+            	controller_cargarSeleccionesDesdeTexto("selecciones.csv",listaSelecciones);
                 break;
 
             case 2:
@@ -39,7 +41,7 @@ int main()
             	break;
 
             case 4:
-            	controller_removerJugador(listaJugadores,optionConvocados);
+            	controller_removerJugador(listaJugadores,listaSelecciones);
 
             	break;
 
@@ -100,23 +102,29 @@ int main()
             		case 4:
             			controller_ordenarJugadores(listaJugadores, 3);
             		break;
-            		case 0:
-
-            		break;
 
             	}}while(optionConvocados != 0);
             	break;
 
             case 8:
             	;
-            	LinkedList* listaConvocados = ll_newLinkedList();
             	controller_convocadosDeSeleccion(listaJugadores,listaSelecciones,listaConvocados);
             	controller_guardarJugadoresModoBinario("Confederacion binario", listaConvocados);
+            	ll_clear(listaConvocados);
+            	break;
+            case 9:
+            	controller_cargarJugadoresDesdeBinario("Confederacion binario", listaConvocados);
             	controller_listarJugadores(listaConvocados);
             	break;
+            case 10:
+            	controller_guardarJugadoresModoTexto("jugadores.csv" , listaJugadores);
+            	controller_guardarSeleccionesModoTexto("selecciones.csv" , listaSelecciones);
+
+            	break;
+
         }
 
-    }while(option != 0);
+    }while(option != 11);
 
     return 0;
 }
