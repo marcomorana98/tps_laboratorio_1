@@ -18,7 +18,6 @@ int parser_JugadorFromText(FILE* pFile , LinkedList* pArrayListJugador)
 	char posicionStr[30];
 	char nacionalidadStr[30];
 	char idSeleccionStr[20];
-	Jugador aux;
 	Jugador* pAux = NULL;
 
 	fscanf(pFile,"%[^,],%[^,],%[^,],%[^,],%[^,],%s",idStr,nombreCompletoStr,edadStr,posicionStr,nacionalidadStr,idSeleccionStr);
@@ -28,6 +27,7 @@ int parser_JugadorFromText(FILE* pFile , LinkedList* pArrayListJugador)
 		ll_add(pArrayListJugador, pAux);
 		pAux = NULL;
 	}
+	free(pAux);
     return 1;
 }
 
@@ -50,7 +50,8 @@ int parser_JugadorFromBinary(FILE* pFile , LinkedList* pArrayListJugador)
 	char edadString[10];
 	char idSeleccionString[10];
 
-	Jugador* jugPAux = (Jugador*)malloc(sizeof(Jugador));
+	Jugador* jugPAux = NULL;
+	jugPAux = (Jugador*)malloc(sizeof(Jugador));
 	while(!feof(pFile)){
 
 		fread(&id,sizeof(int),1,pFile);
@@ -67,7 +68,7 @@ int parser_JugadorFromBinary(FILE* pFile , LinkedList* pArrayListJugador)
 		ll_add(pArrayListJugador, jugPAux);
 
 	}
-
+	free(jugPAux);
     return 1;
 
 }
@@ -85,8 +86,7 @@ int parser_SeleccionFromText(FILE* pFile , LinkedList* pArrayListSeleccion){
 	char paisStr[20];
 	char confederacionStr[20];
 	char convocadosStr[20];
-	Seleccion aux;
-	Seleccion* pAux;
+	Seleccion* pAux = NULL;
 
 	fscanf(pFile,"%[^,],%[^,],%[^,],%s",idStr,paisStr,confederacionStr,convocadosStr);
 
@@ -95,5 +95,6 @@ int parser_SeleccionFromText(FILE* pFile , LinkedList* pArrayListSeleccion){
 		pAux = selec_newParametros(idStr,paisStr,confederacionStr,convocadosStr);
 		ll_add(pArrayListSeleccion, pAux);
 	}
+	free(pAux);
     return 1;
 }

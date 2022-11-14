@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "Jugador.h"
 #include "Seleccion.h"
-
-Seleccion* selec_new();
 
 
 int selec_getId(Seleccion* this,int* id){
@@ -41,7 +40,7 @@ Seleccion* selec_newParametros(char* idStr,char* paisStr,char* confederacionStr,
 }
 
 int selec_buscarIdConfederacion(LinkedList* pArrayListSeleccion,int id){
-	Seleccion* seleccionAux;
+	Seleccion* seleccionAux = NULL;
 	int idAux;
 	if(id == 0){
 		return -1;
@@ -57,7 +56,7 @@ int selec_buscarIdConfederacion(LinkedList* pArrayListSeleccion,int id){
 }
 
 int selec_descontarJugadorPorId(LinkedList* pArrayListSeleccion,int id){
-	Seleccion* pSeleccion;
+	Seleccion* pSeleccion = NULL;
 	int indiceSeleccion = selec_buscarIdConfederacion(pArrayListSeleccion,id);
 	int aux;
 	if(indiceSeleccion != -1){

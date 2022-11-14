@@ -10,6 +10,9 @@
 #include "unistd.h"
 
 
+int controller_listarJugadores(LinkedList* pArrayListJugador);
+
+
 /** \brief Carga los datos de los jugadores desde el archivo jugadores.csv (modo texto).
  *
  * \param path char*
@@ -47,7 +50,7 @@ int controller_cargarJugadoresDesdeBinario(char* path , LinkedList* pArrayListJu
 			parser_JugadorFromBinary(f, pArrayListJugador);
 		}
 		else{
-			printf("el archivo no existe");
+			printf("el archivo no existe \n");
 			return 0;
 		}
     return 1;
@@ -73,17 +76,17 @@ int controller_agregarJugador(LinkedList* pArrayListJugador)
 	char idSeleccionString[10] = "0";
 	char edadString[10];
 	char idString[10];
-	Jugador* newJugador;
+	Jugador* newJugador = NULL;
 	fscanf(f, "%d", &id);
 	int error = 0;
 	fclose(f);
 	sprintf(idString,"%d",id);
 
-	if(utn_getCharArray(nombreCompleto, 100, "Ingrese el nombre completo del jugador") == 1){
-		if(utn_getNumero(&edad,"Ingrese la edad del jugador","Incorrecto el ingreso de datos",18,55,2) == 1){
+	if(utn_getCharArray(nombreCompleto, 100, "Ingrese el nombre completo del jugador \n") == 1){
+		if(utn_getNumero(&edad,"Ingrese la edad del jugador","Incorrecto el ingreso de datos \n",18,55,2) == 1){
 			sprintf(edadString,"%d",edad);
-			if(utn_getCharArray(posicion, 30, "Ingrese la posicion del jugador") == 1){
-				if(utn_getCharArray(nacionalidad, 30, "Ingrese la nacionalidad del jugador") == 1){
+			if(utn_getCharArray(posicion, 30, "Ingrese la posicion del jugador \n") == 1){
+				if(utn_getCharArray(nacionalidad, 30, "Ingrese la nacionalidad del jugador \n") == 1){
 					error = 1;
 				}
 			}
@@ -98,7 +101,10 @@ int controller_agregarJugador(LinkedList* pArrayListJugador)
 		fclose(w);
 	    return 1;
 	}
-	return 0;
+	else{
+		printf("No se creo el jugador, volviendo al menu principal... \n");
+		return 0;
+	}
 }
 
 /** \brief Modificar datos del jugador
@@ -116,14 +122,14 @@ int controller_editarJugador(LinkedList* pArrayListJugador)
 	int edad;
 	char posicionCancha[30];
 	char nacionalidad[30];
-	Jugador* aux;
+	Jugador* aux = NULL;
 
 	utn_getNumero(&posicion,"Ingrese la posicion en el array del jugador que desea editar o ingrese 0 para volver \n","no se a encontrado la posicion \n",0,ll_len(pArrayListJugador)+1,2);
 	if(posicion != 0){
 		aux = ll_get(pArrayListJugador, posicion-1);
 		while(opcion != 0){
 			opcion = 0;
-			printf("que dato desesa editar? \n 1.Nombre \n 2.Edad \n 3.Posicion \n 4.Nacionalidad \n 0.Regresar");
+			printf("Que dato desesa editar? \n 1.Nombre \n 2.Edad \n 3.Posicion \n 4.Nacionalidad \n 0.Regresar \n");
 			utn_getNumero(&opcion,"Ingrese una opcion \n","no se a encontrado la opcion \n",0,4,2);
 			switch(opcion){
 				case 1:
@@ -135,7 +141,7 @@ int controller_editarJugador(LinkedList* pArrayListJugador)
 					}
 					break;
 				case 2:
-					if(utn_getNumero(&edad,"Ingrese la edad del jugador","Incorrecto el ingreso de datos",18,55,2) == 1){
+					if(utn_getNumero(&edad,"Ingrese la edad del jugador \n","Incorrecto el ingreso de datos \n",18,55,2) == 1){
 						jug_setEdad(aux,edad);
 					}
 					else{
@@ -143,7 +149,7 @@ int controller_editarJugador(LinkedList* pArrayListJugador)
 					}
 					break;
 				case 3:
-					if(utn_getCharArray(posicionCancha, 30, "Ingrese la posicion del jugador") == 1){
+					if(utn_getCharArray(posicionCancha, 30, "Ingrese la posicion del jugador \n") == 1){
 						jug_setPosicion(aux,posicionCancha);
 					}
 					else{
@@ -151,7 +157,7 @@ int controller_editarJugador(LinkedList* pArrayListJugador)
 					}
 					break;
 				case 4:
-					if(utn_getCharArray(nacionalidad, 30, "Ingrese la nacionalidad del jugador") == 1){
+					if(utn_getCharArray(nacionalidad, 30, "Ingrese la nacionalidad del jugador \n") == 1){
 						jug_setNacionalidad(aux,nacionalidad);
 					}
 					else{
@@ -198,10 +204,11 @@ int controller_removerJugador(LinkedList* pArrayListJugador, LinkedList* pArrayL
 	FILE* w = NULL;
 	int posicion = 0;
 	int contador;
-	Jugador* aux;
+	Jugador* aux = NULL;
 	int auxId;
 	int auxConvocados;
 	int auxIdSeleccion;
+	Seleccion* seleccionAux = NULL;
 
 	utn_getNumero(&posicion,"Ingrese la posicion del jugador que desea borrar o ingrese 0 para volver para atras \n","no se reconocio la posicion \n",0,ll_len(pArrayListJugador)+1,2);
 	if(posicion == 0){
@@ -211,14 +218,14 @@ int controller_removerJugador(LinkedList* pArrayListJugador, LinkedList* pArrayL
 	fscanf(f, "%d", &contador);
 	fclose(f);
 
-	aux = ll_get(pArrayListJugador,posicion);
+	aux = ll_get(pArrayListJugador,posicion-1);
 
 	jug_getSIdSeleccion(aux, &auxId);
 	if(auxId != 0){
 		auxIdSeleccion = selec_buscarPorID(pArrayListSeleccion, auxId);
-		pArrayListSeleccion = ll_get(pArrayListSeleccion, auxIdSeleccion);
-		selec_getConvocados(pArrayListSeleccion,&auxConvocados);
-		selec_setConvocados(pArrayListSeleccion,auxConvocados-1);
+		seleccionAux = ll_get(pArrayListSeleccion, auxIdSeleccion);
+		selec_getConvocados(seleccionAux,&auxConvocados);
+		selec_setConvocados(seleccionAux,auxConvocados-1);
 	}
 
 	ll_remove(pArrayListJugador,posicion-1);
@@ -241,10 +248,10 @@ int controller_listarJugadores(LinkedList* pArrayListJugador)
 {
 	int length = ll_len(pArrayListJugador);
 	int id;
-	char* nombreCompleto;
+	char* nombreCompleto = NULL;
 	int edad;
-	char* posicion;
-	char* nacionalidad;
+	char* posicion = NULL;
+	char* nacionalidad = NULL;
 	int idSeleccion;
 	Jugador* jugador;
 	printf("| %-10s| %-5s| %-100s| %-10s| %-30s | %-40s| %-10s|\n","NUMERO", "ID", "NOMBRE COMPLETO", "EDAD", "POSICION", "NACIONALIDAD", "ID DE SELECCION");
@@ -321,10 +328,10 @@ int controller_guardarJugadoresModoTexto(char* path , LinkedList* pArrayListJuga
 	FILE* f = NULL;
 	Jugador* aux;
 	int id;
-	char* nombreCompleto;
+	char* nombreCompleto = NULL;
 	int edad;
-	char* posicion;
-	char* nacionalidad;
+	char* posicion = NULL;
+	char* nacionalidad = NULL;
 	int idSeleccion;
 	char idSeleccionString[10];
 	char edadString[10];
@@ -361,7 +368,7 @@ int controller_guardarJugadoresModoTexto(char* path , LinkedList* pArrayListJuga
 int controller_guardarJugadoresModoBinario(char* path , LinkedList* pArrayListJugador)
 {
 	FILE* f = NULL;
-	Jugador* aux;
+	Jugador* aux = NULL;
     remove(path);
 	f = fopen(path, "wb");
 	for(int i=0; i < ll_len(pArrayListJugador); i++){
@@ -387,13 +394,13 @@ int controller_cargarSeleccionesDesdeTexto(char* path , LinkedList* pArrayListSe
 	FILE* f = NULL;
 	    f = fopen(path, "r");
 	    if(f != NULL){
-		    printf("Lee el archivo correctamente seleccion.");
+		    printf("El archivo se a leido correctamente \n");
 		    parser_SeleccionFromText(f, pArrayListSeleccion);
 		    return 1;
 	    }
 	    else{
 	    	fclose(f);
-	    	printf("SALIO MAL.");
+	    	printf("Problema al leer el archivo \n");
 	    }
 	fclose(f);
     return 1;
@@ -423,20 +430,24 @@ int controller_listarSelecciones(LinkedList* pArrayListSeleccion)
 {
 	int length = ll_len(pArrayListSeleccion);
 	int id;
-	char* pais = (char*)malloc(sizeof(char)*30);
-	char* Confederacion = (char*)malloc(sizeof(char)*30);
-	int Convocados;
-	Seleccion* seleccion;
+	char* pais = NULL;
+	char* confederacion = NULL;
+	int convocados;
+	Seleccion* seleccion = NULL;
+	pais = (char*)malloc(sizeof(char)*30);
+	confederacion = (char*)malloc(sizeof(char)*30);
 	printf("| %-10s| %-5s| %-30s| %-25s| %-10s|\n","NUMERO", "ID", "PAIS", "CONFEDERACION", "CONVOCADOS");
 	for(int i=0;i<length-1;i++){
 		seleccion = ll_get(pArrayListSeleccion, i);
 		selec_getId(seleccion, &id);
 		selec_getPais(seleccion, pais);
-		selec_getConfederacion(seleccion, Confederacion);
-		selec_getConvocados(seleccion, &Convocados);
+		selec_getConfederacion(seleccion, confederacion);
+		selec_getConvocados(seleccion, &convocados);
 
-		printf("| %-10d| %-5d| %-30s| %-25s| %-10d|\n",i+1, id, pais, Confederacion, Convocados);
+		printf("| %-10d| %-5d| %-30s| %-25s| %-10d|\n",i+1, id, pais, confederacion, convocados);
 	}
+	free(pais);
+	free(confederacion);
 	return 1;
 }
 
@@ -471,14 +482,15 @@ int controller_guardarSeleccionesModoTexto(char* path , LinkedList* pArrayListSe
 {
     remove(path);
 	FILE* f = NULL;
-	Seleccion* aux;
+	Seleccion* aux = NULL;
 	int id;
 	int convocados;
-	char* confederacion = (char*)malloc(sizeof(char)*30);;
-	char* pais = (char*)malloc(sizeof(char)*30);;
+	char* confederacion = NULL;
+	char* pais = NULL;
 	char convocadosString[10];
 	char idString[10];
-
+	confederacion = (char*)malloc(sizeof(char)*30);
+	pais = (char*)malloc(sizeof(char)*30);
 
 	f = fopen(path, "w");
 	fprintf(f,"%s,%s,%s,%s\n","id", "pais", "confederacion", "convocados");
@@ -493,17 +505,18 @@ int controller_guardarSeleccionesModoTexto(char* path , LinkedList* pArrayListSe
 		fprintf(f,"%s,%s,%s,%s\n",idString,pais, confederacion ,convocadosString);
 	}
 	fclose(f);
-
+	free(pais);
+	free(confederacion);
     return 1;
 }
 
 int controller_listarJugadoresConvocados(LinkedList* pArrayListJugador){
 	int length = ll_len(pArrayListJugador);
 	int id;
-	char* nombreCompleto;
+	char* nombreCompleto = NULL;
 	int edad;
-	char* posicion;
-	char* nacionalidad;
+	char* posicion = NULL;
+	char* nacionalidad = NULL;
 	int idSeleccion;
 	Jugador* jugador;
 	printf("| %-10s| %-5s| %-100s| %-10s| %-30s | %-30s| %-10s|\n","POSICION", "ID", "NOMBRE COMPLETO", "EDAD", "POSICION", "NACIONALIDAD", "ID DE SELECCION");
@@ -530,7 +543,7 @@ int controller_convocar(LinkedList* pArrayListJugador, LinkedList* pArrayListSel
 	int convocadosAux;
 	int opcionSeleccion = -1;
 	int idAux;
-	Jugador* aux;
+	Jugador* aux = NULL;
 	Seleccion* auxSeleccion = NULL;
 	controller_listarJugadores(pArrayListJugador);
 	while(posicion!=0){
@@ -575,18 +588,18 @@ int controller_quita_seleccion(LinkedList* pArrayListJugador, LinkedList* pArray
 	int idSeleccionAux;
 	int convocadosAux;
 	int posicionSeleccion;
-	Jugador* aux;
-	Seleccion* auxSeleccion;
+	Jugador* aux = NULL;
+	Seleccion* auxSeleccion = NULL;
 
 	while(posicion!=0){
-		utn_getNumero(&posicion,"Ingrese la posicion del jugador que desea convocar o 0 para retornar \n","no se reconocio la posicion \n",0,ll_len(pArrayListJugador)+1,2);
+		utn_getNumero(&posicion,"Ingrese la posicion del jugador que desea convocar o 0 para retornar \n","No se reconocio la posicion \n",0,ll_len(pArrayListJugador)+1,2);
 		if(posicion == 0){
 			return 0;
 		}
 		aux = ll_get(pArrayListJugador, posicion-1);
 		jug_getSIdSeleccion(aux,&idSeleccionAux);
 		if(idSeleccionAux == 0){
-			printf("jugador no esta en seleccion por favor elija otro");
+			printf("Jugador no esta en seleccion por favor elija otro \n");
 		}
 		else{
 			posicionSeleccion = selec_buscarIdConfederacion(pArrayListSeleccion,idSeleccionAux);
@@ -601,13 +614,18 @@ int controller_quita_seleccion(LinkedList* pArrayListJugador, LinkedList* pArray
 	}
 
 int controller_convocadosDeSeleccion(LinkedList* pArrayListJugador, LinkedList* pArrayListSeleccion, LinkedList* pArrayListConvocados){
-	char* confederacion = (char*)malloc(sizeof(char)*30);
-	Jugador* auxPunteroJugador = (Jugador*)malloc(sizeof(Jugador));
-	Seleccion* auxSeleccion = (Seleccion*)malloc(sizeof(Seleccion));
+	char* confederacion = NULL;
+	Jugador* auxPunteroJugador = NULL;
+	Seleccion* auxSeleccion = NULL;
 	int auxIdSeleccion;
-	char* auxConfederacion = (char*)malloc(sizeof(char)*30);
+	char* auxConfederacion = NULL;
 	int posicionSeleccion;
-	utn_getCharArray(confederacion, 30, "Ingrese nombre de la confederacion en mayusculas");
+	auxConfederacion = (char*)malloc(sizeof(char)*30);
+	confederacion = (char*)malloc(sizeof(char)*30);
+	auxPunteroJugador = (Jugador*)malloc(sizeof(Jugador));
+	auxSeleccion = (Seleccion*)malloc(sizeof(Seleccion));
+
+	utn_getCharArray(confederacion, 30, "Ingrese nombre de la confederacion en mayusculas \n");
 	for(int i  = 0; i < ll_len(pArrayListJugador); i++){
 
 		auxPunteroJugador = ll_get(pArrayListJugador,i);
@@ -628,6 +646,11 @@ int controller_convocadosDeSeleccion(LinkedList* pArrayListJugador, LinkedList* 
 			}
 		}
 	}
+	free(auxConfederacion);
+	free(confederacion);
+	free(auxPunteroJugador);
+	free(auxSeleccion);
+
 	return 1;
 }
 
