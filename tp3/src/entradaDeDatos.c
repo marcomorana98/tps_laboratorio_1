@@ -91,11 +91,10 @@ int esAlfabetica(char cadena[]){
     int retorno=1;
 
     for(int i=0;*(cadena+i)!='\0';i++){
-        if(((*(cadena+i))>'z'||(*(cadena+i))<'a') && ((*(cadena+i))>'Z'||(*(cadena+i))<'A')){
-            if((*(cadena+i))!=' '){
+        if((((*(cadena+i))>'z'||(*(cadena+i))<'a') && ((*(cadena+i))>'Z'||(*(cadena+i))<'A'))){
+
                 retorno=0;
                 break;
-            }
 
         }
     }
@@ -107,7 +106,7 @@ int utn_getCharArray(char* pResultado, int maxLen, char* mensaje){
     int retorno = 0;
     char buffer[maxLen];
     printf(mensaje);
-    if(myGets(buffer,sizeof(buffer)) && esAlfabetica(buffer)){
+    if(myGets(buffer,sizeof(buffer)) && esAlfabetica(buffer) == 1){
             retorno=1;
 
             strcpy(pResultado,buffer);

@@ -63,7 +63,7 @@ int controller_cargarJugadoresDesdeBinario(char* path , LinkedList* pArrayListJu
  * \return int
  *
  */
-int controller_agregarJugador(LinkedList* pArrayListJugador)
+int controller_agregarJugador(LinkedList* pArrayListJugador, Naciones totalNaciones[], Posiciones posicionJugador[])
 {
 	FILE* f = NULL;
 	FILE* w = NULL;
@@ -85,8 +85,15 @@ int controller_agregarJugador(LinkedList* pArrayListJugador)
 	if(utn_getCharArray(nombreCompleto, 100, "Ingrese el nombre completo del jugador \n") == 1){
 		if(utn_getNumero(&edad,"Ingrese la edad del jugador","Incorrecto el ingreso de datos \n",18,55,2) == 1){
 			sprintf(edadString,"%d",edad);
-			if(utn_getCharArray(posicion, 30, "Ingrese la posicion del jugador \n") == 1){
-				if(utn_getCharArray(nacionalidad, 30, "Ingrese la nacionalidad del jugador \n") == 1){
+			listarPosiciones(posicionJugador);
+			elegirPosiciones(posicionJugador,posicion);
+			printf("%s", posicion);
+			if(posicion != NULL){
+				listarNaciones(totalNaciones);
+				elegirNacion(totalNaciones, nacionalidad);
+
+				if(nacionalidad != NULL){
+					printf("%s", nacionalidad);
 					error = 1;
 				}
 			}
@@ -95,6 +102,7 @@ int controller_agregarJugador(LinkedList* pArrayListJugador)
 
 	if(error == 1){
 		newJugador = jug_newParametros(idString,nombreCompleto,edadString,posicion ,nacionalidad , idSeleccionString);
+		printf("%d, %s, %d, %s, %s ,%d", newJugador->id,newJugador->nombreCompleto,newJugador->edad,newJugador->posicion,newJugador->nacionalidad, newJugador->idSeleccion);
 		ll_add(pArrayListJugador, newJugador);
 		w = fopen("contador.txt","w");
 		fprintf(w,"%d",id+1);

@@ -3,6 +3,7 @@
 #ifndef jug_H_INCLUDED
 #define jug_H_INCLUDED
 
+
 typedef struct
 {
 	int id;
@@ -12,6 +13,20 @@ typedef struct
 	char nacionalidad[30];
 	int idSeleccion;
 }Jugador;
+
+typedef struct
+{
+	int id;
+	char pais[30];
+}Naciones;
+
+typedef struct
+{
+	int id;
+	char posicion[30];
+}Posiciones;
+
+
 
 Jugador* jug_new();
 Jugador* jug_newParametros(char idStr[],char nombreCompletoStr[],char edadStr[], char posicionStr[], char nacionalidadStr[], char idSelccionStr[]);
@@ -38,6 +53,11 @@ int jug_getSIdSeleccion(Jugador* this,int* idSeleccion);
 
 int jug_setIsEmpty(Jugador* this,int isEmpty);
 int jug_getIsEmpty(Jugador* this,int* isEmpty);
+
+int listarPosiciones(Posiciones totalPosiciones[]);
+int listarNaciones(Naciones totalNaciones[]);
+int elegirPosiciones(Posiciones* totalPosiciones, char posicion[]);
+int elegirNacion(Naciones* totalNaciones, char nacion[]);
 
 
 #endif // jug_H_INCLUDED

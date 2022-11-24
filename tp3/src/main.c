@@ -18,7 +18,8 @@ int main()
 	listaJugadores = ll_newLinkedList();
 	listaSelecciones = ll_newLinkedList();
 	listaConvocados = ll_newLinkedList();
-
+	Naciones totalNaciones[32] = {{1, "Alemania"}, {2, "Arabia Saudita"}, {3, "Argentina"}, {4, "Australia"}, {5, "Belgica"}, {6, "Brasil"}, {7, "Camerun"}, {8, "Canada"}, {9, "Corea del Sur"}, {10, "Costa Rica"}, {11, "Croacia"}, {12, "Dinamarca"}, {13, "Ecuador"}, {14, "Espana"}, {15, "Estados Unidos"}, {16, "Francia"}, {17, "Gales"}, {18, "Ghana"}, {19, "Holanda"}, {20, "Inglaterra"}, {21, "Iran"}, {22, "Japon"}, {23, "Marruecos"}, {24, "Mexico"}, {25, "Polonia"}, {26, "Portugal"}, {27, "Qatar"}, {28, "Senegal"}, {29, "Serbia"}, {30, "Suiza"}, {31, "Tunez"}, {32, "Uruguay"}};
+	Posiciones posicionJugador[11] = {{1, "Portero"}, {2, "Defensa central"}, {3, "Lateral izquierdo"}, {4, "Lateral derecho"}, {5, "Pivote"}, {6, "Mediocentro"}, {7, "Mediocentro ofensivo"}, {8, "Delantero centro"}, {9, "Extremo izquierdo"}, {10, "Extremo derecho"}, {11, "Mediapunta"}};
     do{
     	utn_getNumero(&option,"Menu principal: \n 1. Cargar los datos de las listas de excel \n 2. Ingresar un nuevo jugador \n 3. Modificar un jugador en la tabla \n 4. Dar de baja un jugador en la tabla \n 5. Menu de listados \n 6. Menu de convocaciones \n 7. Menu de ordenar y listar \n 8. Generar archivo binario de jugadores convocados con una confederacion a eleccion \n 9. Cargar archivo binario ya creado de jugadores convocados \n 10. Guardar archivo .csv de jugadores y confederaciones cargados \n 11. Salir del programa \n Ingrese opcion \n","Incorrecto el ingreso de datos \n",1,11,2);
         switch(option)
@@ -30,7 +31,7 @@ int main()
                 break;
 
             case 2:
-            	controller_agregarJugador(listaJugadores);
+            	controller_agregarJugador(listaJugadores, totalNaciones, posicionJugador);
 
                 break;
 
@@ -105,7 +106,7 @@ int main()
             			controller_ordenarJugadores(listaJugadores, 3);
             		break;
 
-            	}}while(optionConvocados != 0);
+            	}}while(optionOrden != 0);
             	break;
 
             case 8:

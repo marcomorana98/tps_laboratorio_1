@@ -1,8 +1,45 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <String.h>
 #include "Jugador.h"
+#include "entradaDeDatos.h"
 
 
+int listarPosiciones(Posiciones totalPosiciones[]){
+	int returnAux = 0;
+	if(totalPosiciones != NULL){
+		for(int i = 0; i<11;i++){
+			printf("%d. %s \n",totalPosiciones[i].id,totalPosiciones[i].posicion);
+		}
+		returnAux = 1;
+	}
+	return returnAux;
+}
+
+int listarNaciones(Naciones totalNaciones[]){
+	int returnAux = 0;
+	if(totalNaciones != NULL){
+		for(int i = 0; i<32;i++){
+			printf("%d. %s \n",totalNaciones[i].id,totalNaciones[i].pais);
+		}
+		returnAux = 1;
+	}
+	return returnAux;
+}
+
+int elegirPosiciones(Posiciones* totalPosiciones, char posicion[]){
+	int resultado;
+	utn_getNumero(&resultado,"elija el numero de la posicion que desea asignarle","No se a reconocido el dato",1,11,2);
+	strcpy(posicion, (totalPosiciones + resultado - 1) -> posicion);
+	return 1;
+}
+
+int elegirNacion(Naciones* totalNaciones, char nacion[]){
+	int resultado;
+	utn_getNumero(&resultado,"elija el numero de el pais que desea asignarle","No se a reconocido el dato",1,32,2);
+	strcpy(nacion, (totalNaciones + resultado - 1) -> pais);
+	return 1;
+}
 
 int jug_setId(Jugador* this,int id){
 	this->id = id;
