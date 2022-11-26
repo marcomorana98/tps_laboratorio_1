@@ -12,6 +12,8 @@ int main()
     int optionListados = -1;
     int optionConvocados = -1;
     int optionOrden = -1;
+    int confirmacionSalir = 0;
+    int banderaCargados = 0;
     LinkedList* listaJugadores = NULL;
     LinkedList* listaSelecciones = NULL;
 	LinkedList* listaConvocados = NULL;
@@ -26,101 +28,167 @@ int main()
         {
 
             case 1:
-            	controller_cargarJugadoresDesdeTexto("jugadores.csv",listaJugadores);
-            	controller_cargarSeleccionesDesdeTexto("selecciones.csv",listaSelecciones);
+            	if(banderaCargados == 0){
+            		if(controller_cargarJugadoresDesdeTexto("jugadores.csv",listaJugadores) == 1 &&
+            			controller_cargarSeleccionesDesdeTexto("selecciones.csv",listaSelecciones) == 1){
+            			banderaCargados = 1;}
+            		else{printf("Error al cargar los archivos");}
+            	}
+            	else{
+            		printf("El archivo ya fue cargado");
+            	}
                 break;
 
             case 2:
-            	controller_agregarJugador(listaJugadores, totalNaciones, posicionJugador);
+            	if(controller_agregarJugador(listaJugadores, totalNaciones, posicionJugador) == 1){
+            		confirmacionSalir = 1;
+            	}
 
                 break;
 
             case 3:
-            	controller_listarJugadores(listaJugadores);
-            	controller_editarJugador(listaJugadores);
+            	if(ll_len(listaJugadores)>0){
+            		controller_listarJugadores(listaJugadores, listaSelecciones);
+            		if(controller_editarJugador(listaJugadores, totalNaciones, posicionJugador) == 1){
+            			confirmacionSalir = 1;
+            		}
+            	}
+            	else{
+            		printf("no exsiten jugadores para editar \n");
+            	}
 
             	break;
 
             case 4:
-            	controller_removerJugador(listaJugadores,listaSelecciones);
-
+            	if(ll_len(listaJugadores)>0){
+					if(controller_removerJugador(listaJugadores,listaSelecciones) == 1){
+						confirmacionSalir = 1;
+					}
+            	}
+            	else{
+            		printf("no exsiten jugadores para borrar \n");
+            	}
             	break;
 
             case 5:
-                do{
-                	utn_getNumero(&optionListados,"Menu de listados: \n 1. Listar todos los jugadores \n 2. Listar todas las selecciones \n 3. Listar solo los jugadores convocados \n 0. Volver al menu principal \n Ingrese opcion de listado \n","Incorrecto el ingreso de datos \n",0,3,2);
-                    switch(optionListados)
-                    {
-                    case 1:
-                    	controller_listarJugadores(listaJugadores);
-                    break;
-                    case 2:
-                    	controller_listarSelecciones(listaSelecciones);
-                    break;
-                    case 3:
-                    	controller_listarJugadoresConvocados(listaJugadores);
-                    break;
-                    case 0:
-                    	printf("volviendo al menu principal... \n");
-                    default:
-                    	break;
-                    }}while(optionListados != 0);
+            	if(ll_len(listaJugadores)>0){
+            		do{
+						utn_getNumero(&optionListados,"Menu de listados: \n 1. Listar todos los jugadores \n 2. Listar todas las selecciones \n 3. Listar solo los jugadores convocados \n 0. Volver al menu principal \n Ingrese opcion de listado \n","Incorrecto el ingreso de datos \n",0,3,2);
+						switch(optionListados)
+						{
+						case 1:
+							controller_listarJugadores(listaJugadores, listaSelecciones);
+						break;
+						case 2:
+							controller_listarSelecciones(listaSelecciones);
+						break;
+						case 3:
+							controller_listarJugadoresConvocados(listaJugadores, listaSelecciones);
+						break;
+						case 0:
+							printf("volviendo al menu principal... \n");
+						default:
+							break;
+						}}while(optionListados != 0);
+            	}
+            	else{
+            	    printf("no exsiten jugadores \n");
+            	}
                 break;
             case 6:
-
-            	do{
-                utn_getNumero(&optionConvocados,"Menu de convocar: \n 1. Convocar un jugador de la lista \n 2. Quitar un jugador convocado de su seleccion \n 0. Volver al menu principal \n Ingrese opcion de listado \n","Incorrecto el ingreso de datos \n",0,2,2);
-                switch(optionConvocados){
-                case 1:
-                	controller_convocar(listaJugadores, listaSelecciones);
-                	break;
-                case 2:
-                	controller_quita_seleccion(listaJugadores,listaSelecciones);
-                	break;
-                case 0:
-                	printf("volviendo al menu principal... \n");
-                	break;
-                default:
-                	printf("no se reconocio la opcion, por favor ingrese otra \n");
-                	break;
-                }
-
-            	break;
-            	}while(optionConvocados != 0);
+            	if(ll_len(listaJugadores)>0){
+					do{
+					utn_getNumero(&optionConvocados,"Menu de convocar: \n 1. Convocar un jugador de la lista \n 2. Quitar un jugador convocado de su seleccion \n 0. Volver al menu principal \n Ingrese opcion de listado \n","Incorrecto el ingreso de datos \n",0,2,2);
+					switch(optionConvocados){
+					case 1:
+						if(controller_convocar(listaJugadores, listaSelecciones) == 1){
+							confirmacionSalir = 1;
+						}
+						break;
+					case 2:
+						if(controller_quita_seleccion(listaJugadores,listaSelecciones) == 1){
+							confirmacionSalir = 1;
+						}
+						break;
+					case 0:
+						printf("volviendo al menu principal... \n");
+						break;
+					default:
+						printf("no se reconocio la opcion, por favor ingrese otra \n");
+						break;
+					}
+					}while(optionConvocados != 0);
+				}
+            	else{
+            	    printf("no exsiten jugadores \n");
+            	}
             	break;
             case 7:
-
+            	if(ll_len(listaJugadores)>0){
             	do{
             	utn_getNumero(&optionOrden,"Menu de Ordenar y Listar: \n 1. Ordenar y listar jugadores por nacionalidad \n 2. Ordenar y listar Selecciones por confederacion \n 3. Ordenar y listar jugadores por edad \n 4. Ordenar y listar jugadores por nombre \n 0. Volver al menu principal \n Ingrese opcion de listado \n","Incorrecto el ingreso de datos \n",0,4,2);
             	switch(optionOrden){
             		case 1:
-            			controller_ordenarJugadores(listaJugadores, 1);
+            			if(controller_ordenarJugadores(listaJugadores, 1) == 1){
+            				controller_listarJugadores(listaJugadores, listaSelecciones);
+            				confirmacionSalir = 1;
+            			}
             		break;
             		case 2:
-            			controller_ordenarSelecciones(listaSelecciones);
+            			if(controller_ordenarSelecciones(listaSelecciones) == 1){
+							controller_listarSelecciones(listaSelecciones);
+            				confirmacionSalir = 1;
+            			}
             		break;
             		case 3:
-            			controller_ordenarJugadores(listaJugadores, 2);
+            			if(controller_ordenarJugadores(listaJugadores, 2) == 1){
+            				controller_listarJugadores(listaJugadores, listaSelecciones);
+            				confirmacionSalir = 1;
+            			}
             		break;
             		case 4:
-            			controller_ordenarJugadores(listaJugadores, 3);
-            		break;
-
+            			if(controller_ordenarJugadores(listaJugadores, 3) == 1){
+            				controller_listarJugadores(listaJugadores, listaSelecciones);
+            				confirmacionSalir = 1;
+            			}
             	}}while(optionOrden != 0);
-            	break;
 
+
+				}
+            	else{
+            	    printf("no exsiten jugadores \n");
+            	}
+            	break;
             case 8:
+            	if(ll_len(listaJugadores)>0){
             	controller_convocadosDeSeleccion(listaJugadores,listaSelecciones,listaConvocados);
             	controller_guardarJugadoresModoBinario("Confederacion binario", listaConvocados);
             	ll_clear(listaConvocados);
+            	confirmacionSalir = 0;
+				}
+            	else{
+            	    printf("no exsiten jugadores \n");
+            	}
             	break;
             case 9:
             	controller_cargarJugadoresDesdeBinario("Confederacion binario", listaConvocados);
-            	controller_listarJugadores(listaConvocados);
+            	controller_listarJugadores(listaConvocados, listaSelecciones);
             	break;
             case 10:
             	controller_guardarJugadoresModoTexto("jugadores.csv" , listaJugadores);
             	controller_guardarSeleccionesModoTexto("selecciones.csv" , listaSelecciones);
+            	confirmacionSalir = 0;
+            	break;
+            case 11:
+            	if(confirmacionSalir == 1){
+            		utn_getNumero(&confirmacionSalir,"Hay cambios sin guardar, desea salir igual? \n 0. Si \n 1. No \n","No se reconocio el valor \n",0,1,2);
+            		if(confirmacionSalir == 0){
+            			return 0;
+            		}
+            		else{
+            			option = -1;
+            		}
+            	}
             	break;
 
         }

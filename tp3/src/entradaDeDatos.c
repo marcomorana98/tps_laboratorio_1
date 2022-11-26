@@ -88,15 +88,24 @@ int myGets(char* cadena,int largo)
 }
 
 int esAlfabetica(char cadena[]){
-    int retorno=1;
-
+    int retorno=0;
+    int banderaEspacio = 1;
     for(int i=0;*(cadena+i)!='\0';i++){
-        if((((*(cadena+i))>'z'||(*(cadena+i))<'a') && ((*(cadena+i))>'Z'||(*(cadena+i))<'A'))){
-
-                retorno=0;
+        if(((*(cadena+i))<'z'&&(*(cadena+i))>'a') || ((*(cadena+i))<'Z'&&(*(cadena+i))>'A') || (*(cadena+i))==' '){
+                retorno=1;
                 break;
 
         }
+    }
+    for(int i=0;*(cadena+i)!='\0';i++){
+    	if((*(cadena+i)) != ' '){
+    		banderaEspacio = 0;
+    	}
+    }
+
+    if(banderaEspacio == 1){
+    	retorno=0;
+    	printf("El nombre no puede estar compuesto solo por espacios \n");
     }
 
     return retorno;
