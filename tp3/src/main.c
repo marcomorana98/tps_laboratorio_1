@@ -160,19 +160,24 @@ int main()
             	}
             	break;
             case 8:
-            	if(ll_len(listaJugadores)>0){
+            	if(ll_len(listaSelecciones)>0){
             	controller_convocadosDeSeleccion(listaJugadores,listaSelecciones,listaConvocados);
             	controller_guardarJugadoresModoBinario("Confederacion binario", listaConvocados);
             	ll_clear(listaConvocados);
             	confirmacionSalir = 0;
 				}
             	else{
-            	    printf("no exsiten jugadores \n");
+            	    printf("Se deben cargar las selecciones \n");
             	}
             	break;
             case 9:
+            	if(ll_len(listaSelecciones)>0){
             	controller_cargarJugadoresDesdeBinario("Confederacion binario", listaConvocados);
             	controller_listarJugadores(listaConvocados, listaSelecciones);
+            	}
+            	else{
+            	    printf("Se deben cargar las selecciones \n");
+            	}
             	break;
             case 10:
             	controller_guardarJugadoresModoTexto("jugadores.csv" , listaJugadores);
